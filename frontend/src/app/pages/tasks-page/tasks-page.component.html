@@ -1,1 +1,17 @@
-<p>tasks-page works!</p>
+<div class="tasks-page">
+    <mat-grid-list class="tasks-page__content" cols="12" rowHeight="100%" gutterSize="16px">
+        <mat-grid-tile colspan="3" rowspan="1">
+            <mat-grid-tile-header>Tasks ({{completedTasksCount$ | async}}/{{tasksCount$ | async}})</mat-grid-tile-header>
+            <div class="task-tile-list">
+                <app-task-tile *ngFor="let task of (tasks$ | async)" [task]="task" (click)="selectTask(task)"></app-task-tile>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="9" rowspan="1" *ngIf="selectedTask">
+            <mat-grid-tile-header>{{selectedTask.title}}</mat-grid-tile-header>
+            <div class="content">
+                <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="selectedTask.solution"></ngx-monaco-editor>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+

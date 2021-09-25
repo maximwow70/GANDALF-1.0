@@ -1,12 +1,16 @@
-<mat-toolbar>
-    <span class="logo" routerLink="/">GANDALF</span>
-    <div class="container-header__navigation">
-        <button mat-button routerLink="/tasks">Tasks</button>
+<div class="container">
+    <mat-toolbar class="container__header container-header">
+        <span class="logo" routerLink="/">GANDALF</span>
+        <div class="container-header__navigation">
+            <button mat-button routerLink="/tasks">Tasks</button>
+        </div>
+        <div class="container-header__spacer"></div>
+        <button mat-icon-button
+                class="container-header__administration-button">
+            <mat-icon>settings</mat-icon>
+        </button>
+    </mat-toolbar>
+    <div class="container__content">
+        <router-outlet></router-outlet>
     </div>
-    <div class="container-header__spacer"></div>
-    <button mat-icon-button
-            class="container-header__administration-button">
-        <mat-icon>settings</mat-icon>
-    </button>
-</mat-toolbar>
-<router-outlet></router-outlet>
+</div>

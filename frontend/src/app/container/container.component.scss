@@ -1,0 +1,14 @@
+@import "variables.scss";
+
+.container-header__spacer {
+    display: flex;
+    flex: 1 100%;
+}
+
+.container-header__navigation {
+    margin-left: $gutter-width;
+}
+
+.logo {
+    cursor: pointer;
+}

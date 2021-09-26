@@ -1,17 +1,24 @@
 <div class="tasks-page">
-    <mat-grid-list class="tasks-page__content" cols="12" rowHeight="100%" gutterSize="16px">
-        <mat-grid-tile colspan="3" rowspan="1">
-            <mat-grid-tile-header>Tasks ({{completedTasksCount$ | async}}/{{tasksCount$ | async}})</mat-grid-tile-header>
-            <div class="task-tile-list">
-                <app-task-tile *ngFor="let task of (tasks$ | async)" [task]="task" (click)="selectTask(task)"></app-task-tile>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="9" rowspan="1" *ngIf="selectedTask">
-            <mat-grid-tile-header>{{selectedTask.title}}</mat-grid-tile-header>
-            <div class="content">
-                <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="selectedTask.solution"></ngx-monaco-editor>
-            </div>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <div class="tasks-page__content">
+        <div class="tasks-page__tasks-list">
+            <button class="tasks-page__add-task-button"
+                    mat-raised-button color="primary"
+                    (click)="addTask()"
+                    [disabled]="tasksFacade.addTaskInProgress$ | async">
+                ADD TASK
+            </button>
+            <app-task-card class="tasks-page__task"
+                           *ngFor="let task of tasks"
+                           [task]="task"
+                           [deleteDisabled]="tasksFacade.deleteTaskInProgress$ | async"
+                           (openClicked)="navigateToTask(task.uid)"
+                           (editClicked)="navigateToTaskEdit(task.taskUid)"
+                           (deleteClicked)="deleteTask(task.taskUid)">
+            </app-task-card>
+        </div>
+        <div class="tasks-page__scoreboard">
+            scoreboard here
+        </div>
+    </div>
 </div>
 

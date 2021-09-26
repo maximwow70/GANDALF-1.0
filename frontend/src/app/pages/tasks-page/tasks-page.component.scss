@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 :host,
 .tasks-page,
 .tasks-page__content {
@@ -6,19 +8,27 @@
     height: 100%;
 }
 
-.content,
-.task-tile-list {
-    position: absolute;
-    top: 48px;
-    width: 100%;
-    height: calc(100% - 48px);
+.tasks-page__content {
+    padding: $gutter-width;
+    box-sizing: border-box;
 }
 
-.editor {
-    height: 100%;
-}
-
-.task-tile-list {
+.tasks-page__tasks-list {
     display: flex;
     flex-direction: column;
+    width: 50%;
+    margin-right: 16px;
+}
+
+.tasks-page__task {
+    padding-bottom: $gutter-width;
+}
+
+.tasks-page__scoreboard {
+    flex: 1;
+}
+
+.tasks-page__add-task-button {
+    max-width: 100px;
+    margin-bottom: 16px;
 }

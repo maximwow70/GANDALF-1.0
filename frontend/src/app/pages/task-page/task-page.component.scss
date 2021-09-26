@@ -1,0 +1,24 @@
+@import "variables.scss";
+
+:host,
+.task-page,
+.task-page__content {
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+.content {
+    position: absolute;
+    top: 48px;
+    width: 100%;
+    height: calc(100% - 48px);
+}
+
+.editor {
+    height: 100%;
+}
+
+.task-viewer {
+    height: 100%;
+}

@@ -8,12 +8,25 @@ const routes: Routes = [
 			{
 				path: '',
 				pathMatch: 'full',
-				loadChildren: () => import('./pages/landing-page/landing-page.module').then((m: typeof import('./pages/landing-page/landing-page.module')) => m.LandingPageModule),
+				loadChildren: () =>
+					import('./pages/landing-page/landing-page.module').then(
+						(m: typeof import('./pages/landing-page/landing-page.module')) => m.LandingPageModule
+					),
 			},
 			{
 				path: 'tasks',
 				pathMatch: 'full',
-				loadChildren: () => import('./pages/tasks-page/tasks-page.module').then((m: typeof import('./pages/tasks-page/tasks-page.module')) => m.TasksPageModule),
+				loadChildren: () =>
+					import('./pages/tasks-page/tasks-page.module').then(
+						(m: typeof import('./pages/tasks-page/tasks-page.module')) => m.TasksPageModule
+					),
+			},
+			{
+				path: 'task',
+				loadChildren: () =>
+					import('./pages/task-page/task-page.module').then(
+						(m: typeof import('./pages/task-page/task-page.module')) => m.TaskPageModule
+					),
 			},
 			{
 				path: '**',

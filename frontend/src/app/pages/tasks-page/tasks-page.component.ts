@@ -1,43 +1,73 @@
 import { TasksFacadeService } from './service/tasks-facade.service';
-import { Component, OnInit } from '@angular/core';
-import { UserTask } from './model/user-task';
-import { Observable } from 'rxjs/internal/Observable';
-import { map } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { UserTask } from '../../model/user-task';
+import { map, takeUntil } from 'rxjs/operators';
+import { EntityStatus } from 'src/app/common-components/model/entity-status';
+import { v4 } from 'uuid';
+import { TaskType } from '../../model/task-type';
+import { Task } from '../../model/task';
+import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
 	selector: 'app-tasks-page',
 	templateUrl: './tasks-page.component.html',
 	styleUrls: ['./tasks-page.component.scss'],
 })
-export class TasksPageComponent implements OnInit {
-	public editorOptions = { theme: 'vs-dark', language: 'typescript' };
-	public tasks$!: Observable<UserTask[]>;
-	public completedTasksCount$!: Observable<number>;
-	public tasksCount$!: Observable<number>;
-	public selectedTask!: UserTask;
+export class TasksPageComponent implements OnInit, OnDestroy {
+	public tasks: UserTask[];
+	public isTasksLoading$!: Observable<boolean>;
+	public destroy$: Subject<void>;
 
-	constructor(private tasksFacadeService: TasksFacadeService) {}
-
-	public ngOnInit(): void {
-		this.tasksFacadeService.loadUserTasks();
-		this.tasks$ = this.tasksFacadeService.userTasks.value$;
-		this.completedTasksCount$ = this.tasks$.pipe(
-			map((tasks: UserTask[]) => {
-				return tasks.filter((task: UserTask) => task.completed).length;
-			})
-		);
-		this.tasksCount$ = this.tasks$.pipe(
-			map((tasks: UserTask[]) => {
-				return tasks.length;
-			})
-		);
+	constructor(public tasksFacade: TasksFacadeService, private router: Router) {
+		this.tasks = [];
+		this.destroy$ = new Subject<void>();
 	}
 
-	public selectTask(task: UserTask): void {
-		this.selectedTask = task;
-		this.editorOptions = {
-			...this.editorOptions,
-			language: task.type,
+	public ngOnInit(): void {
+		this.tasksFacade.loadUserTasks();
+		this.tasks = this.tasksFacade.userTasks.value;
+		this.isTasksLoading$ = this.tasksFacade.userTasks.status$.pipe(
+			takeUntil(this.destroy$),
+			map((status: EntityStatus) => {
+				return status === EntityStatus.Pending;
+			})
+		);
+		this.tasksFacade.userTasks.value$.pipe(takeUntil(this.destroy$)).subscribe((tasks: UserTask[]) => {
+			this.tasks = tasks;
+		});
+	}
+
+	public ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
+	}
+
+	public navigateToTask(uid: string): void {
+		this.router.navigateByUrl(`/task/${uid}`);
+	}
+
+	public navigateToTaskEdit(uid: string): void {
+		this.router.navigateByUrl(`/edit-task/${uid}`);
+	}
+
+	public deleteTask(uid: string): void {
+		const isConfirmed: boolean = confirm('Are you sure you want to delete this task? This action can not be reverted!');
+		if (isConfirmed) {
+			this.tasksFacade.deleteTask(uid);
+		}
+	}
+
+	public addTask(): void {
+		const defaultTask: Task = {
+			uid: v4(),
+			title: 'New Task',
+			task: 'You shall not pass!1!',
+			solutionPlaceholder: '',
+			maxScore: 100,
+			type: TaskType.HTML,
+			tests: '',
 		};
+		this.tasksFacade.addTask(defaultTask);
 	}
 }

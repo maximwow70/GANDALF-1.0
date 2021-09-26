@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { DownloadableEntity } from './downloadable-entity';
 import { EntityStatus } from './entity-status';
 import { map } from 'rxjs/operators';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 export class StoreEntity<T> {
 	public value$: Observable<T>;
@@ -11,15 +11,14 @@ export class StoreEntity<T> {
 
 	private entity$: BehaviorSubject<DownloadableEntity<T>>;
 
-	constructor(initialValue: T) {
+	constructor(initialValue: T | null) {
 		this.entity$ = new BehaviorSubject<DownloadableEntity<T>>({
-			value: initialValue,
+			value: initialValue as T,
 			status: EntityStatus.Init,
 			errors: null,
 		});
 
 		this.value$ = this.entity$.pipe(
-			distinctUntilChanged(),
 			map((entity: DownloadableEntity<T>) => {
 				return entity.value;
 			})
@@ -35,6 +34,10 @@ export class StoreEntity<T> {
 
 	public get errors(): any {
 		return this.entity$.value.errors;
+	}
+
+	public get value(): T {
+		return this.entity$.value.value;
 	}
 
 	public setValue(value: T): void {

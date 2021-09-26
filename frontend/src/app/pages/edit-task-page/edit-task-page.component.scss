@@ -1,0 +1,28 @@
+@import "variables.scss";
+
+:host,
+.edit-task-page {
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+.edit-task-page__tabs {
+    width: 100%;
+}
+
+.editor {
+    height: 100%;
+    width: 100%;
+}
+
+:host ::ng-deep .mat-tab-body-wrapper {
+    height: 100%;
+}
+
+.edit-task-page__save-button {
+    position: absolute;
+    bottom: $gutter-width;
+    right: $gutter-width;
+    z-index: 99999;
+}

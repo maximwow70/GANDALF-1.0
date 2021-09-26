@@ -1,0 +1,49 @@
+<div class="edit-task-page">
+    <!-- <mat-grid-list class="edit-task-page__content" cols="12" rowHeight="100%" gutterSize="16px" *ngIf="task">
+        <mat-grid-tile colspan="4" rowspan="1">
+            <div class="task-viewer" [innerHTML]="task.task"></div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="8" rowspan="1">
+            <mat-grid-tile-header>{{task.title}}</mat-grid-tile-header>
+            <div class="content">
+                <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.solutionPlaceholder"></ngx-monaco-editor>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list> -->
+    <mat-tab-group class="edit-task-page__tabs" *ngIf="task" (selectedTabChange)="onTabChange()">
+        <mat-tab label="General">
+            <mat-form-field appearance="fill">
+                <mat-label>Title</mat-label>
+                <input type="text" matInput [formControl]="titleFormControl" placeholder="Enter task title...">
+                <mat-error *ngIf="titleFormControl.hasError('required')">
+                  Title is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Max Score</mat-label>
+                <input type="text" matInput [formControl]="maxScoreFormControl" placeholder="Enter max score for task...">
+                <mat-error *ngIf="maxScoreFormControl.hasError('required')">
+                  Score is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Select Task Type</mat-label>
+                <mat-select [(ngModel)]="task.type">
+                    <mat-option value="html">HTML</mat-option>
+                    <mat-option value="javascript">JS</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <ckeditor [(ngModel)]="task.task" [editor]="Editor"></ckeditor>
+        </mat-tab>
+        <mat-tab label="Solution" class="editor">
+            <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.solutionPlaceholder"></ngx-monaco-editor>
+        </mat-tab>
+        <mat-tab label="Tests" [disabled]="!isJsTask">
+            <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.tests"></ngx-monaco-editor>
+        </mat-tab>
+    </mat-tab-group>
+    <button class="edit-task-page__save-button" mat-fab color="primary" aria-label="Save">
+        <mat-icon>save</mat-icon>
+    </button>
+</div>
+

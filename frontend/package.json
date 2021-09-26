@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@ckeditor/ckeditor5-angular": "^2.0.2",
+    "@ckeditor/ckeditor5-build-classic": "^29.2.0",
     "monaco-editor": "^0.28.1",
     "ngx-monaco-editor": "^12.0.0",
     "rxjs": "~6.6.0",

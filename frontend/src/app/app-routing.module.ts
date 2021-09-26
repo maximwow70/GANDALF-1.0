@@ -29,6 +29,13 @@ const routes: Routes = [
 					),
 			},
 			{
+				path: 'edit-task',
+				loadChildren: () =>
+					import('./pages/edit-task-page/edit-task-page.module').then(
+						(m: typeof import('./pages/edit-task-page/edit-task-page.module')) => m.EditTaskPageModule
+					),
+			},
+			{
 				path: '**',
 				redirectTo: '',
 			},

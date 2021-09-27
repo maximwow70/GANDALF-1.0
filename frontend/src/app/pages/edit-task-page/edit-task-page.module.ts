@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [EditTaskPageComponent],
@@ -28,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 		MatSelectModule,
 		CKEditorModule,
 		MatIconModule,
+		HttpClientModule,
 	],
 	exports: [EditTaskPageComponent],
 })

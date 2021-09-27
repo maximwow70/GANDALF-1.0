@@ -1,28 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { TaskType } from 'src/app/model/task-type';
 import { Task } from 'src/app/model/task';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class EditTaskRepositoryService {
-	constructor() {}
+	constructor(private http: HttpClient) {}
 
 	public loadUserTask(uid: string): Observable<Task> {
-		return of({
-			uid: '1',
-			title: 'The first task',
-			solutionPlaceholder: 'another test',
-			task: '<h1>Make script which inputs 123</h1><br/>and outputs 122333',
-			maxScore: 100,
-			tests: '',
-			type: TaskType.JAVASCIPT,
-		}).pipe(delay(500));
+		return this.http.get<Task>('api/tasks/' + uid);
 	}
 
 	public saveTask(task: Task): Observable<Task> {
-		return of(task).pipe(delay(5000));
+		return this.http.put<Task>('api/tasks', task);
 	}
 }

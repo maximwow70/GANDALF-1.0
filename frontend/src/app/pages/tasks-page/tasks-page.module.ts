@@ -6,10 +6,11 @@ import { TaskCardComponent } from './components/task-card/task-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [TasksPageComponent, TaskCardComponent],
-	imports: [TasksPageRoutingModule, CommonModule, MatCardModule, MatButtonModule, MatSnackBarModule],
+	imports: [TasksPageRoutingModule, CommonModule, MatCardModule, MatButtonModule, MatSnackBarModule, HttpClientModule],
 	exports: [TasksPageComponent],
 })
 export class TasksPageModule {}

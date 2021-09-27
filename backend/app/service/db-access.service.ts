@@ -9,20 +9,20 @@ export class DbAccessService {
 		return this.mongoClient;
 	}
 
-	public get radarsDb(): Promise<Db> {
+	public get db(): Promise<Db> {
 		if (this.mongoClient.isConnected()) {
-			return Promise.resolve(this.mongoClient.db('radars-db'));
+			return Promise.resolve(this.mongoClient.db('gandalf-db'));
 		} else {
 			return this.mongoClient.connect().then((client: MongoClient) => {
 				this.mongoClient = client;
-				return client.db('radars-db');
+				return client.db('gandalf-db');
 			});
 		}
 	}
 
 	constructor() {
 		this.mongoClient = new MongoClient(
-			`${config.mongo.accessUrl}`,
+			`mongodb+srv://user:h08FMi9ubLAakYpw@cluster0.qrfka.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
 			{
 				useNewUrlParser: true,
 				useUnifiedTopology: true,

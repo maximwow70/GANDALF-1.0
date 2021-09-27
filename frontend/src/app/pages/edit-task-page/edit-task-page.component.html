@@ -1,15 +1,4 @@
 <div class="edit-task-page">
-    <!-- <mat-grid-list class="edit-task-page__content" cols="12" rowHeight="100%" gutterSize="16px" *ngIf="task">
-        <mat-grid-tile colspan="4" rowspan="1">
-            <div class="task-viewer" [innerHTML]="task.task"></div>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="8" rowspan="1">
-            <mat-grid-tile-header>{{task.title}}</mat-grid-tile-header>
-            <div class="content">
-                <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.solutionPlaceholder"></ngx-monaco-editor>
-            </div>
-        </mat-grid-tile>
-    </mat-grid-list> -->
     <mat-tab-group class="edit-task-page__tabs" *ngIf="task" (selectedTabChange)="onTabChange()">
         <mat-tab label="General">
             <mat-form-field appearance="fill">
@@ -42,7 +31,12 @@
             <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.tests"></ngx-monaco-editor>
         </mat-tab>
     </mat-tab-group>
-    <button class="edit-task-page__save-button" mat-fab color="primary" aria-label="Save">
+    <button class="edit-task-page__save-button"
+            mat-fab
+            color="primary"
+            aria-label="Save"
+            [disabled]="this.taskFacade.taskSaveInProgress$ | async"
+            (click)="saveTask(task)">
         <mat-icon>save</mat-icon>
     </button>
 </div>

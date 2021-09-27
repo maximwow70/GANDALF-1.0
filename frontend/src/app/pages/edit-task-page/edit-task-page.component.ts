@@ -66,4 +66,8 @@ export class EditTaskPageComponent implements OnInit, OnDestroy {
 			window.dispatchEvent(new Event('resize'));
 		}, 150);
 	}
+
+	public saveTask(task: Task): void {
+		this.taskFacade.saveTask(task);
+	}
 }

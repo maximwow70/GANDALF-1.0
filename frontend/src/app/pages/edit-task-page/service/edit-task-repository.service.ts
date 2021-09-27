@@ -21,4 +21,8 @@ export class EditTaskRepositoryService {
 			type: TaskType.JAVASCIPT,
 		}).pipe(delay(500));
 	}
+
+	public saveTask(task: Task): Observable<Task> {
+		return of(task).pipe(delay(5000));
+	}
 }

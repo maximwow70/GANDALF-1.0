@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
-
-const pathToDist: string = __dirname + '/../../../frontend/dist/';
+import { PATH_TO_FE_DIST } from './constants';
 
 /* eslint-disable */
 export function serveAngular(app: express.Router): void {
@@ -17,9 +16,9 @@ export function serveAngular(app: express.Router): void {
 			return next();
 		}
 
-		fs.createReadStream(pathToDist + 'index.html').pipe(response);
+		fs.createReadStream(PATH_TO_FE_DIST + 'index.html').pipe(response);
 	});
 
-	app.use(express.static(pathToDist));
+	app.use(express.static(PATH_TO_FE_DIST));
 }
 /* eslint-disable */

@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { RegisterRoutes } from '../tsoa-build/routes';
 import swaggerUi from 'swagger-ui-express';
 import { serveAngular } from './serve-angular';
+import { runLiveReload } from './live-reload';
 import compression from 'compression';
 
 /* eslint-disable */
@@ -29,5 +30,7 @@ app.use('/docs', swaggerUi.serve, async (_: any, response: Response) => {
 });
 
 serveAngular(app);
+
+runLiveReload(app);
 
 /* eslint-disable */

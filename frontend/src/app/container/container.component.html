@@ -1,5 +1,8 @@
 <div class="container">
     <mat-toolbar class="container__header container-header">
+        <div class="container__avatar">
+            <app-avatar [avatar]="avatar"></app-avatar>
+        </div>
         <span class="logo" routerLink="/">GANDALF</span>
         <div class="container-header__navigation">
             <button mat-button routerLink="/tasks">Tasks</button>

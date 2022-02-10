@@ -38,4 +38,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 		this.destroy$.next();
 		this.destroy$.complete();
 	}
+
+	public submitTask(task: UserTask): void {
+		this.taskFacade.submitTask(task);
+	}
 }

@@ -8,6 +8,7 @@ export class UserTaskConverterService {
         return {
             uid: userTask.uid,
             taskUid: task.uid,
+            userId: userTask.userId,
             title: task.title,
             task: task.task,
             solution: userTask.solution ? userTask.solution : task.solutionPlaceholder,
@@ -21,6 +22,7 @@ export class UserTaskConverterService {
     public fromDto(dto: UserTaskDto): UserTask {
         return {
             uid: dto.uid,
+            userId: dto.userId,
             completed: dto.completed,
             solution: dto.solution,
             userScore: dto.userScore,

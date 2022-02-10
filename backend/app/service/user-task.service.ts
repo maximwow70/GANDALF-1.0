@@ -1,85 +1,102 @@
-import { UserTaskConverterService } from './user-task-converter.service';
-import { v4 } from 'uuid';
+import { UserTaskConverterService } from "./user-task-converter.service";
+import { v4 } from "uuid";
 import { TaskEntity } from "../model/task-entity";
 import { UserTask, UserTaskDto } from "../model/user-task";
 import { Inject, Injectable } from "../ioc";
 import { TaskService } from "./task.service";
 import { UserTaskRepositoryService } from "./user-task-repository.service";
-import { TaskRepositoryService } from './task-repository.service';
+import { TaskRepositoryService } from "./task-repository.service";
+import { UserTaskScoreService } from "./user-task-score.service";
 
-const userId: string = 'admin';
+const userId: string = "admin";
 
 @Injectable()
 export class UserTaskService {
-    @Inject() taskService!: TaskService;
-    @Inject() userTaskRepository!: UserTaskRepositoryService;
-    @Inject() taskRepository!: TaskRepositoryService;
-    @Inject() userTaskConverter!: UserTaskConverterService;
+  @Inject() taskService!: TaskService;
+  @Inject() userTaskRepository!: UserTaskRepositoryService;
+  @Inject() taskRepository!: TaskRepositoryService;
+  @Inject() userTaskConverter!: UserTaskConverterService;
+  @Inject() userTaskScoreService!: UserTaskScoreService;
 
-    public async getUserTaskById(uid: string): Promise<UserTaskDto> {
-        const userTask: UserTask = await this.userTaskRepository.getTaskById(uid);
-        const task: TaskEntity = await this.taskRepository.getTaskById(userTask.taskUid);
+  public async getUserTaskById(uid: string): Promise<UserTaskDto> {
+    const userTask: UserTask = await this.userTaskRepository.getTaskById(uid);
+    const task: TaskEntity = await this.taskRepository.getTaskById(
+      userTask.taskUid
+    );
 
-        return Promise.resolve(this.userTaskConverter.toDto(userTask, task));
+    return Promise.resolve(this.userTaskConverter.toDto(userTask, task));
+  }
+
+  public async getAllTasks(): Promise<UserTaskDto[]> {
+    const tasks: TaskEntity[] = await this.taskRepository.getAllTasks();
+
+    const existingUserTasks: UserTask[] =
+      await this.userTaskRepository.getAllTasksByUserId(userId);
+
+    const tasksToAdd: TaskEntity[] = tasks.filter((task: TaskEntity) => {
+      return !existingUserTasks.some(
+        (existingTask: UserTask) => existingTask.taskUid === task.uid
+      );
+    });
+
+    const userTasksToAdd = tasksToAdd.map((taskToAdd: TaskEntity) => {
+      const userTask: UserTask = this.generateUserTaskByTask(taskToAdd);
+      return userTask;
+    });
+
+    if (userTasksToAdd.length) {
+      await this.userTaskRepository.addTasksBulk(userTasksToAdd);
     }
 
-    public async getAllTasks(): Promise<UserTaskDto[]> {
-        const tasks: TaskEntity[] = await this.taskRepository.getAllTasks();
+    const fullTasksList: UserTask[] = [...existingUserTasks, ...userTasksToAdd];
 
-        const existingUserTasks: UserTask[] = await this.userTaskRepository.getAllTasksByUserId(userId);
+    const sortedTasksList: UserTaskDto[] = tasks.map((task: TaskEntity) => {
+      const userTask: UserTask = fullTasksList.find(
+        (userTask: UserTask) => userTask.taskUid === task.uid
+      ) as UserTask;
+      return this.userTaskConverter.toDto(userTask, task);
+    });
 
-        const tasksToAdd: TaskEntity[] = tasks.filter((task: TaskEntity) => {
-            return !existingUserTasks.find((existingTask: UserTask) => existingTask.taskUid === task.uid);
-        });
+    return Promise.resolve(sortedTasksList);
+  }
 
-        const userTasksToAdd = tasksToAdd.map((taskToAdd: TaskEntity) => {
-            const userTask: UserTask = this.generateUserTaskByTask(taskToAdd);
-            return userTask;
-        });
+  public async createUserTask(task: TaskEntity): Promise<UserTaskDto> {
+    const createdTask: TaskEntity = await this.taskService.createTask(task);
 
-        if (userTasksToAdd.length) {
-            await this.userTaskRepository.addTasksBulk(userTasksToAdd);
-        }
+    const userTask: UserTask = this.generateUserTaskByTask(createdTask);
 
-        const fullTasksList: UserTask[] = [...existingUserTasks, ...userTasksToAdd];
+    await this.userTaskRepository.createTask(userTask);
 
-        const sortedTasksList: UserTaskDto[] = tasks.map((task: TaskEntity) => {
-            const userTask: UserTask = fullTasksList.find((userTask: UserTask) => userTask.taskUid === task.uid) as UserTask;
-            return this.userTaskConverter.toDto(userTask, task);
-        });
+    return this.getUserTaskById(userTask.uid);
+  }
 
-        return Promise.resolve(sortedTasksList);
-    }
+  public async updateUserTask(dto: UserTaskDto): Promise<UserTaskDto> {
+    const userTask: UserTask = this.userTaskConverter.fromDto(dto);
+    const task: TaskEntity = await this.taskRepository.getTaskById(userTask.taskUid);
+    const userScore: number = this.userTaskScoreService.getScore(userTask, task);
+    const userTaskWithScore: UserTask = {
+      ...userTask,
+      userScore: userScore,
+    };
+    await this.userTaskRepository.updateTask(userTaskWithScore);
+    return Promise.resolve({ ...dto, userScore });
+  }
 
-    public async createUserTask(task: TaskEntity): Promise<UserTaskDto> {
-        const createdTask: TaskEntity = await this.taskService.createTask(task);
+  public async removeUserTasksByTaskId(uid: string): Promise<string> {
+    return this.userTaskRepository.removeTaskByTaskUid(uid);
+  }
 
-        const userTask: UserTask = this.generateUserTaskByTask(createdTask);
+  private generateUserTaskByTask(task: TaskEntity): UserTask {
+    const userTask: UserTask = {
+      uid: v4(),
+      //   todo: use real userID
+      userId: userId,
+      taskUid: task.uid,
+      solution: task.solutionPlaceholder,
+      userScore: 0,
+      completed: false,
+    };
 
-        await this.userTaskRepository.createTask(userTask);
-
-        return this.getUserTaskById(userTask.uid);
-    }
-
-    public async updateUserTask(dto: UserTaskDto): Promise<UserTaskDto> {
-        const userTask: UserTask = this.userTaskConverter.fromDto(dto);
-        await this.userTaskRepository.updateTask(userTask);
-        return Promise.resolve(dto);
-    }
-
-    public async removeUserTasksByTaskId(uid: string): Promise<string> {
-        return this.userTaskRepository.removeTaskByTaskUid(uid);
-    }
-
-    private generateUserTaskByTask(task: TaskEntity): UserTask {
-        const userTask: UserTask = {
-            uid: v4(),
-            taskUid: task.uid,
-            solution: task.solutionPlaceholder,
-            userScore: 0,
-            completed: false
-        };
-
-        return userTask;
-    }
+    return userTask;
+  }
 }

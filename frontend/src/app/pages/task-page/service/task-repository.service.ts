@@ -14,11 +14,7 @@ export class TaskRepositoryService {
 		return this.http.get<UserTask>('/api/user-tasks/' + uid);
 	}
 
-	public submitTask(task: UserTask): Observable<UserTask> {
-		return of({
-			...task,
-			userScore: 100,
-			completed: true,
-		}).pipe(delay(10000));
+	public submitTask(task: UserTask): Observable<any> {
+		return this.http.put(`/api/user-tasks/` + task.uid, task);
 	}
 }

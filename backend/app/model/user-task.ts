@@ -3,6 +3,7 @@ import { TaskType } from './task-type';
 export interface UserTaskDto {
 	uid: string;
 	taskUid: string;
+	userId: string;
 	title: string;
 	solution: string;
 	task: string;
@@ -11,9 +12,9 @@ export interface UserTaskDto {
 	completed: boolean;
 	type: TaskType;
 }
-
 export interface UserTask {
 	uid: string;
+	userId: string;
 	taskUid: string;
 	solution: string;
 	userScore: number;

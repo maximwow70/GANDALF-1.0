@@ -6,6 +6,7 @@ import { TaskPageComponent } from './task-page.component';
 import { CommonModule } from '@angular/common';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
 	declarations: [TaskPageComponent],
@@ -17,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 		MatGridListModule,
 		FormsModule,
 		MatButtonModule,
+		MatIconModule,
 	],
 	exports: [TaskPageComponent],
 })

@@ -24,3 +24,10 @@
     width: 100%;
     padding: $gutter-width;
 }
+
+.task-page__submit-button {
+    position: absolute;
+    bottom: $gutter-width;
+    right: $gutter-width;
+    z-index: 99999;
+}

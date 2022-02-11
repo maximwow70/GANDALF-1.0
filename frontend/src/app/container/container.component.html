@@ -1,22 +1,43 @@
 <div class="container">
-    <mat-toolbar class="container__header container-header">
-        <div class="container__avatar">
+    <mat-toolbar class="container-header">
+        <div class="container-header__avatar">
             <app-avatar [avatar]="avatar"></app-avatar>
         </div>
-        <span class="logo" routerLink="/">GANDALF</span>
-        <div class="container-header__navigation">
-            <button mat-button routerLink="/tasks">Tasks</button>
+
+        <span
+            class="container-header__logo"
+            routerLink="/">
+            GANDALF
+        </span>
+
+        <div class="container-header__link">
+            <button
+                class="container-header__button"
+                mat-button
+                routerLink="/tasks">
+                Tasks
+            </button>
         </div>
-        <div class="container-header__navigation">
-            <button mat-button routerLink="/review">Review</button>
+        <div class="container-header__link">
+            <button
+                class="container-header__button"
+                mat-button
+                routerLink="/review">
+                Review
+            </button>
         </div>
+
         <div class="container-header__spacer"></div>
-        <button mat-icon-button
-                class="container-header__administration-button">
-            <mat-icon>settings</mat-icon>
+
+        <button
+            class="container-header__icon-button container-header__icon-button_admin"
+            mat-icon-button>
+            <mat-icon class="container-header__settings">
+                settings
+            </mat-icon>
         </button>
     </mat-toolbar>
-    <div class="container__content">
+    <div class="container-content">
         <router-outlet></router-outlet>
     </div>
 </div>

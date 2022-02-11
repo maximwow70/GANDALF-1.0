@@ -1,0 +1,7 @@
+@media screen and (max-width: 600px) {
+	.review-page.review-page_s-sized-device {
+        & .review-page__form {
+            width: 100%;
+        }
+    }
+}

@@ -36,6 +36,13 @@ const routes: Routes = [
 					),
 			},
 			{
+				path: 'review',
+				loadChildren: () =>
+					import('./pages/review-page/review-page.module').then(
+						(m: typeof import('./pages/review-page/review-page.module')) => m.ReviewPageModule
+					),
+			},
+			{
 				path: '**',
 				redirectTo: '',
 			},

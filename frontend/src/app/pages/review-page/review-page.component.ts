@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskFacadeService } from '../task-page/service/task-facade.service';
+import { UserTask } from 'src/app/model/user-task';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'app-review-page',
@@ -10,8 +13,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewPageComponent implements OnInit {
 
-	constructor() {}
+	public destroy$: Subject<void>;
+	public usersTasks: UserTask[];
 
-	public ngOnInit(): void {}
+	constructor(public taskFacade: TaskFacadeService) {
+		this.destroy$ = new Subject<void>();
+		this.usersTasks = [];
+	}
+
+	public ngOnInit(): void {
+		this.taskFacade.usersTasks.value$.subscribe((usersTasks: UserTask[]) => {
+			this.usersTasks = usersTasks;
+		});
+
+		this.taskFacade.loadUsersTasks();
+	}
+
+	public ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
+	}
 
 }

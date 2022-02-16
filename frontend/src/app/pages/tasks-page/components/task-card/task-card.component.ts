@@ -11,6 +11,7 @@ export class TaskCardComponent {
 	@Input() deleteDisabled!: boolean | null;
 	@Input() reviewMode: boolean = false;
 	@Input() highlighted: boolean = false;
+	@Input() inReview: boolean = false;
 
 	@Output() openClicked: EventEmitter<void>;
 	@Output() editClicked: EventEmitter<void>;

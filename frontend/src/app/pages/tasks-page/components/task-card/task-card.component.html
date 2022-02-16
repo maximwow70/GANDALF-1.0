@@ -21,7 +21,7 @@
 			EDIT
 		</button>
 		<button
-			*ngIf="reviewMode"
+			*ngIf="reviewMode && !inReview"
 			mat-button
 			color="primary"
 			(click)="reviewClicked.next()">

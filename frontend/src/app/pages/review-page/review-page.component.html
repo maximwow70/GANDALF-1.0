@@ -8,6 +8,7 @@
                 [task]="userTask"
                 [highlighted]="currentReviewTask ? userTask.uid === currentReviewTask.uid : false"
                 [reviewMode]="true"
+                [inReview]="currentReviewTask ? userTask.uid === currentReviewTask.uid : false"
                 (reviewClicked)="onReviewTask(userTask)">
             </app-task-card>
         </div>

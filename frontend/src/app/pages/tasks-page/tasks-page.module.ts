@@ -1,16 +1,23 @@
-import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
-import { TasksPageRoutingModule } from './tasks-page-routing.module';
-import { TasksPageComponent } from './tasks-page.component';
-import { TaskCardComponent } from './components/task-card/task-card.component';
-import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 
+import { TasksPageRoutingModule } from './tasks-page-routing.module';
+import { TasksPageComponent } from './tasks-page.component';
+
+import { TaskCardModule } from './components/task-card/task-card.module';
+
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
-	declarations: [TasksPageComponent, TaskCardComponent],
-	imports: [TasksPageRoutingModule, CommonModule, MatCardModule, MatButtonModule, MatSnackBarModule, HttpClientModule],
+	declarations: [TasksPageComponent],
+	imports: [
+		CommonModule,
+		HttpClientModule,
+		TasksPageRoutingModule,
+		TaskCardModule,
+		MatButtonModule,
+	],
 	exports: [TasksPageComponent],
 })
 export class TasksPageModule {}

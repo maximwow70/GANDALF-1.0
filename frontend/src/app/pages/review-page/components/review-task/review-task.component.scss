@@ -1,0 +1,43 @@
+@import '../../../../app.component.scss';
+
+.review-task {
+
+	&__form,
+    &__form-wrapper,
+	&__form-content {
+		display: flex;
+		flex-direction: column;
+
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+	}
+
+    &__form-header {
+        margin-bottom: 10px;
+    }
+
+    &__form-header,
+	&__form-content,
+    &__form-footer {
+		padding: 0px;
+	}
+
+	&__form-header {
+		display: flex;
+		justify-content: space-between;
+
+		background-color: white;
+	}
+
+	&__form-footer {
+		display: flex;
+		justify-content: flex-end;
+
+		background-color: white;
+	}
+
+	&__textarea-field {
+		resize: none;
+	}
+}

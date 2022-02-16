@@ -1,0 +1,97 @@
+<form class="review-task__form">
+    <div class="review-task__form-wrapper form-wrapper">
+        <mat-toolbar class="review-task__form-header">
+            <span class="review-task__form-title">
+                Review
+            </span>
+            <button
+                class="review-task__form-button toolbar-button"
+                mat-icon-button
+                color="primary"
+                aria-label="Cancel"
+                (click)="cancelClicked.next()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="review-task__form-content">
+            <mat-form-field
+                class="review-task__form-field"
+                appearance="outline">
+                <mat-label class="review-task__field-label">
+                    Task
+                </mat-label>
+                <mat-select class="review-task__select-field">
+                    <mat-option value="one">
+                        First Task
+                    </mat-option>
+                    <mat-option value="two">
+                        Second Task
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+                class="review-task__form-field"
+                appearance="outline">
+                <mat-label class="review-task__field-label">
+                    Student
+                </mat-label>
+                <mat-select class="review-task__select-field">
+                    <mat-option value="one">
+                        First Student
+                    </mat-option>
+                    <mat-option value="two">
+                        Second Student
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+                class="review-task__form-field"
+                appearance="outline">
+                <mat-label class="review-task__field-label">
+                    Score
+                </mat-label>
+                <input
+                    class="review-task__input-field"
+                    matInput
+                    type="number"
+                    placeholder="Change number...">
+            </mat-form-field>
+
+            <mat-form-field
+                class="review-task__form-field"
+                appearance="outline">
+                <mat-label class="review-task__field-label">
+                    Comment
+                </mat-label>
+                <textarea
+                    class="review-task__textarea-field"
+                    matInput
+                    type="text"
+                    placeholder="Leave a comment..."
+                    rows="7"
+                    resize="none"></textarea>
+            </mat-form-field>
+        </div>
+
+        <mat-toolbar
+            class="review-task__form-footer"
+            color="basic">
+            <button
+                class="review-task__form-button toolbar-button"
+                mat-raised-button
+                color="primary">
+                Submit
+            </button>
+            <button
+                class="review-task__form-button toolbar-button"
+                mat-button
+                color="primary"
+                (click)="cancelClicked.next()">
+                Cancel
+            </button>
+        </mat-toolbar>
+    </div>
+</form>

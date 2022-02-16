@@ -1,83 +1,25 @@
-<section class="review-page review-page_s-sized-device">
-    <mat-card class="review-page__form">
-        <mat-card-title class="review-page__form-title">
-            Review
-        </mat-card-title>
 
-        <mat-card-content class="review-page__form-content">
-            <mat-form-field
-                class="review-page__form-field"
-                appearance="outline">
-                <mat-label class="review-page__field-label">
-                    Task
-                </mat-label>
-                <mat-select class="review-page__select-field">
-                    <mat-option value="one">
-                        First Task
-                    </mat-option>
-                    <mat-option value="two">
-                        Second Task
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field
-                class="review-page__form-field"
-                appearance="outline">
-                <mat-label class="review-page__field-label">
-                    Student
-                </mat-label>
-                <mat-select class="review-page__select-field">
-                    <mat-option value="one">
-                        First Student
-                    </mat-option>
-                    <mat-option value="two">
-                        Second Student
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field
-                class="review-page__form-field"
-                appearance="outline">
-                <mat-label class="review-page__field-label">
-                    Score
-                </mat-label>
-                <input
-                    class="review-page__input-field"
-                    matInput
-                    type="number"
-                    placeholder="Change number...">
-            </mat-form-field>
-
-            <mat-form-field
-                class="review-page__form-field"
-                appearance="outline">
-                <mat-label class="review-page__field-label">
-                    Comment
-                </mat-label>
-                <textarea
-                    class="review-page__textarea-field"
-                    matInput
-                    type="text"
-                    placeholder="Leave a comment..."
-                    rows="7"
-                    resize="none"></textarea>
-            </mat-form-field>
-        </mat-card-content>
-
-        <mat-card-actions
-            class="review-page__form-actions"
-            align="end">
-            <button
-                mat-raised-button
-                color="primary">
-                Submit
-            </button>
-        </mat-card-actions>
-
-        <mat-card-footer class="review-page__form-footer">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </mat-card-footer>
-    </mat-card>
-</section>
+<mat-drawer-container class="review-page review-page_s-sized-device review-page_m-sized-device review-page_l-sized-device review-page_xl-sized-device">
+    <mat-drawer-content>
+        <div class="page-wrapper">
+            <app-task-card
+                class="review-page__task"
+                *ngFor="let userTask of usersTasks"
+                [task]="userTask"
+                [highlighted]="currentReviewTask ? userTask.uid === currentReviewTask.uid : false"
+                [reviewMode]="true"
+                (reviewClicked)="onReviewTask(userTask)">
+            </app-task-card>
+        </div>
+    </mat-drawer-content>
+    <mat-drawer
+        class="review-page__drawer"
+        mode="side"
+        [opened]="isNeedToOpenReviewTask"
+        position="end">
+        <app-review-task
+            [task]="currentReviewTask"
+            (cancelClicked)="onCancelReviewTask()">
+        </app-review-task>
+    </mat-drawer>
+</mat-drawer-container>

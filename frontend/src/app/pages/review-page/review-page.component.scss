@@ -1,3 +1,5 @@
+@import '../../app.component.scss';
+
 :host,
 .review-page {
 	width: 100%;
@@ -5,22 +7,7 @@
 }
 
 .review-page {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	&__form {
-        width: 480px;
-        box-sizing: border-box;
-        margin: 20px;
-	}
-
-    &__form-content {
-        display: flex;
-		flex-direction: column;
-    }
-
-    &__textarea-field {
-        resize: none;
+    &__drawer {
+        width: 25%;
     }
 }

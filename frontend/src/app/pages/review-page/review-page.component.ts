@@ -16,6 +16,9 @@ export class ReviewPageComponent implements OnInit {
 	public destroy$: Subject<void>;
 	public usersTasks: UserTask[];
 
+	public currentReviewTask: UserTask | null = null;
+	public isNeedToOpenReviewTask: boolean = false;
+
 	constructor(public taskFacade: TaskFacadeService) {
 		this.destroy$ = new Subject<void>();
 		this.usersTasks = [];
@@ -32,6 +35,17 @@ export class ReviewPageComponent implements OnInit {
 	public ngOnDestroy(): void {
 		this.destroy$.next();
 		this.destroy$.complete();
+	}
+
+	public onReviewTask(task: UserTask): void {
+		this.currentReviewTask = {...task};
+		console.log(this.currentReviewTask)
+		this.isNeedToOpenReviewTask = true;
+	}
+
+	public onCancelReviewTask(): void {
+		this.currentReviewTask = null;
+		this.isNeedToOpenReviewTask = false;
 	}
 
 }

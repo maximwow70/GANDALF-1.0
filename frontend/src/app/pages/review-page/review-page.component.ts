@@ -39,7 +39,6 @@ export class ReviewPageComponent implements OnInit {
 
 	public onReviewTask(task: UserTask): void {
 		this.currentReviewTask = {...task};
-		console.log(this.currentReviewTask)
 		this.isNeedToOpenReviewTask = true;
 	}
 

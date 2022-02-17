@@ -7,7 +7,9 @@ export interface UserTask {
 	solution: string;
 	task: string;
 	userScore: number;
+	userName: string;
 	maxScore: number;
 	completed: boolean;
 	type: TaskType;
+	reviewerComment: string;
 }

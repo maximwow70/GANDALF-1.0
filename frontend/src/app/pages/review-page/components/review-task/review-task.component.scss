@@ -16,10 +16,6 @@
 
 .review-task {
 
-	&__wrapper {
-		padding: $form-padding;
-	}
-
 	&__wrapper,
 	&__group,
 	&__form,
@@ -33,7 +29,7 @@
     &__footer {
 		display: flex;
 
-		padding: $form-toolbar-padding;
+		padding: $form-padding;
 
 		background-color: $form-toolbar-bg;
 	}

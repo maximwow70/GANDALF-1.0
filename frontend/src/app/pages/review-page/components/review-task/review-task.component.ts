@@ -1,6 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatTab } from '@angular/material/tabs/tab';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs/tab-group';
 import { AppTitles } from 'src/app/model/app-titles';
 import { IFormControl } from 'src/app/model/form-control';

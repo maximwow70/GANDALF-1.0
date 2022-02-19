@@ -13,7 +13,7 @@ export class UserTaskScoreService {
     const correctAnswers: boolean[] = tests
       .map((test) => getFunction()(test.input) === test.output)
       .filter((test) => Boolean(test));
-    const userScore: number = (correctAnswers.length / tests.length) * 100;
+    const userScore: number = (correctAnswers.length / tests.length) * task.maxScore;
 
     return userScore;
   }

@@ -1,4 +1,4 @@
-import { UserTask } from '../../../../model/user-task';
+import { UserTask } from '../../model/user-task';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({

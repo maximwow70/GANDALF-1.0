@@ -6,7 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ReviewPageComponent } from './review-page.component';
 import { ReviewPageRoutingModule } from './review-page-routing.module';
 import { ReviewTaskModule } from './components/review-task/review-task.module';
-import { TaskCardModule } from '../tasks-page/components/task-card/task-card.module';
+import { TaskCardModule } from '../../common-components/task-card/task-card.module';
 
 @NgModule({
     declarations: [ReviewPageComponent],

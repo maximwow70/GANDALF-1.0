@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { TasksPageRoutingModule } from './tasks-page-routing.module';
 import { TasksPageComponent } from './tasks-page.component';
-import { TaskCardModule } from './components/task-card/task-card.module';
+import { TaskCardModule } from '../../common-components/task-card/task-card.module';
 
 @NgModule({
 	declarations: [TasksPageComponent],

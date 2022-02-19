@@ -7,6 +7,7 @@ import { Task } from 'src/app/model/task';
 import { Subject } from 'rxjs';
 import { TaskType } from 'src/app/model/task-type';
 import { FormControl, Validators } from '@angular/forms';
+import { monacoEditorOptions } from 'src/app/utils/monaco-editor/options';
 
 @Component({
 	selector: 'app-edit-task-page',
@@ -15,7 +16,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class EditTaskPageComponent implements OnInit, OnDestroy {
 	public Editor = ClassicEditor;
-	public editorOptions = { theme: 'vs-dark', language: 'typescript' };
+	public editorOptions = monacoEditorOptions;
 	public task!: Task;
 	public destroy$: Subject<void>;
 	public titleFormControl: FormControl;

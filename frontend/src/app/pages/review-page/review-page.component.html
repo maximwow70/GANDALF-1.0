@@ -1,14 +1,28 @@
 
-<mat-drawer-container class="review-page review-page_s-sized-device review-page_m-sized-device review-page_l-sized-device review-page_xl-sized-device">
+<mat-drawer-container
+    class="
+        review-page
+        review-page_s-sized-device
+        review-page_m-sized-device
+        review-page_l-sized-device review-page_xl-sized-device
+    ">
     <mat-drawer-content>
-        <div class="page-wrapper">
+        <div class="review-page__wrapper">
             <app-task-card
                 class="review-page__task"
                 *ngFor="let userTask of usersTasks"
                 [task]="userTask"
-                [highlighted]="currentReviewTask ? userTask.uid === currentReviewTask.uid : false"
+                [highlighted]="
+                    currentReviewTask
+                        ? userTask.uid === currentReviewTask.uid
+                        : false
+                "
                 [reviewMode]="true"
-                [inReview]="currentReviewTask ? userTask.uid === currentReviewTask.uid : false"
+                [inReview]="
+                    currentReviewTask
+                        ? userTask.uid === currentReviewTask.uid
+                        : false
+                "
                 (reviewClicked)="onReviewTask(userTask)">
             </app-task-card>
         </div>

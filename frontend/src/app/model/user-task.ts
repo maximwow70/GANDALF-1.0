@@ -1,15 +1,10 @@
-import { TaskType } from './task-type';
+import { Task } from './task';
 
-export interface UserTask {
-	uid: string;
+export interface UserTask extends Task {
 	taskUid: string;
-	title: string;
 	solution: string;
-	task: string;
 	userScore: number;
 	userName: string;
-	maxScore: number;
 	completed: boolean;
-	type: TaskType;
 	reviewerComment: string;
 }

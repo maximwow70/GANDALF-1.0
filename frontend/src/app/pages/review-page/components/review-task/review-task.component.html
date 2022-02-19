@@ -1,131 +1,165 @@
-<form
+<div
     *ngIf="task"
-    class="review-task__form"
-    [formGroup]="reviewTaskForm"
-    (ngSubmit)="onSubmitTaskReview()">
-    <div class="review-task__form-wrapper form-wrapper">
-        <mat-toolbar class="review-task__form-header">
-            <span class="review-task__form-title">
-                Review
-            </span>
-            <button
-                class="review-task__form-button toolbar-button"
-                mat-icon-button
-                color="primary"
-                aria-label="Cancel"
-                (click)="onCancelTaskReview">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar>
+    class="review-task__wrapper">
+    <mat-toolbar class="review-task__header">
+        <span class="review-task__title">
+            Review
+        </span>
+        <button
+            class="review-task__button"
+            mat-icon-button
+            color="primary"
+            aria-label="Cancel"
+            (click)="onCancelTaskReview()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
 
-        <div class="review-task__form-content">
-            <mat-form-field
-                class="review-task__form-field"
-                appearance="outline">
-                <mat-label class="review-task__field-label">
-                    Task
-                </mat-label>
-                <input
-                    class="review-task__input-field"
-                    matInput
-                    type="text"
-                    [name]="taskTitleControlName"
-                    readonly="true"
-                    [formControlName]="taskTitleControlName">
-            </mat-form-field>
+    <mat-tab-group
+        #reviewTaskTabs
+        class="review-task__group"
+        (selectedTabChange)="onSelectedReviewTaskTabChange($event)">
+        <mat-tab
+            class="review-task__group-tab"
+            [label]="reviewTaskSubmitTabLabel">
+            <form
+                class="review-task__form"
+                [formGroup]="reviewTaskForm">
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Task
+                    </mat-label>
+                    <input
+                        class="review-task__input-field"
+                        matInput
+                        type="text"
+                        [name]="taskTitleControlName"
+                        readonly="true"
+                        [formControlName]="taskTitleControlName">
+                </mat-form-field>
+    
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Student
+                    </mat-label>
+                    <input
+                        class="review-task__input-field"
+                        matInput
+                        type="text"
+                        [name]="taskStudentControlName"
+                        readonly="true"
+                        [formControlName]="taskStudentControlName">
+                </mat-form-field>
+    
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Score
+                    </mat-label>
+                    <input
+                        class="review-task__input-field"
+                        matInput
+                        type="number"
+                        [name]="taskScoreControlName"
+                        [value]="task.userScore"
+                        placeholder="Change number..."
+                        required
+                        [min]="taskMinScore"
+                        [max]="taskMaxScore"
+                        [formControlName]="taskScoreControlName">
+                    <mat-error 
+                        *ngIf="
+                            reviewTaskForm.controls[taskScoreControlName].hasError('min')
+                            || reviewTaskForm.controls[taskScoreControlName].hasError('max')
+                        "
+                        class="review-task__field-error">
+                        Please enter score <strong>from {{taskMinScore}} to {{taskMaxScore}}</strong>
+                    </mat-error>
+                    <mat-error
+                        *ngIf="reviewTaskForm.controls[taskScoreControlName].hasError('required')"
+                        class="review-task__field-error">
+                        Score is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+    
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Comment
+                    </mat-label>
+                    <textarea
+                        class="review-task__textarea-field"
+                        matInput
+                        type="text"
+                        [name]="taskCommentControlName"
+                        [value]="task.reviewerComment"
+                        rows="7"
+                        resize="none"
+                        placeholder="Leave a comment..."
+                        required
+                        [minLength]="taskMinCommentLength"
+                        [maxLength]="taskMaxCommentLength"
+                        [formControlName]="taskCommentControlName"></textarea>
+                    <mat-error
+                        *ngIf="reviewTaskForm.controls[taskCommentControlName].hasError('required')"
+                        class="review-task__field-error">
+                        Comment is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </mat-tab>
 
-            <mat-form-field
-                class="review-task__form-field"
-                appearance="outline">
-                <mat-label class="review-task__field-label">
-                    Student
-                </mat-label>
-                <input
-                    class="review-task__input-field"
-                    matInput
-                    type="text"
-                    [name]="taskStudentControlName"
-                    readonly="true"
-                    [formControlName]="taskStudentControlName">
-            </mat-form-field>
+        <mat-tab
+            *ngIf="task.solution"
+            class="review-task__group-tab"
+            [label]="reviewTaskSolutionTabLabel">
+            <ngx-monaco-editor
+                *ngIf="isNeedToShowSolutionEditor"
+                class="review-task__editor"
+                [options]="monacoEditorOptions"
+                [(ngModel)]="task.solution"></ngx-monaco-editor>
+        </mat-tab>
 
-            <mat-form-field
-                class="review-task__form-field"
-                appearance="outline">
-                <mat-label class="review-task__field-label">
-                    Score
-                </mat-label>
-                <input
-                    class="review-task__input-field"
-                    matInput
-                    type="number"
-                    [name]="taskScoreControlName"
-                    [value]="task.userScore"
-                    placeholder="Change number..."
-                    required
-                    [min]="taskMinScore"
-                    [max]="taskMaxScore"
-                    [formControlName]="taskScoreControlName">
-                <mat-error 
-                    *ngIf="
-                        reviewTaskForm.controls[taskScoreControlName].hasError('min')
-                        || reviewTaskForm.controls[taskScoreControlName].hasError('max')
-                    "
-                    class="review-task__field-error">
-                    Please enter score <strong>from {{taskMinScore}} to {{taskMaxScore}}</strong>
-                </mat-error>
-                <mat-error
-                    *ngIf="reviewTaskForm.controls[taskScoreControlName].hasError('required')"
-                    class="review-task__field-error">
-                    Score is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
+        <mat-tab
+            *ngIf="task.tests"
+            class="review-task__group-tab"
+            [label]="reviewTaskTestsTabLabel">
+            <ngx-monaco-editor
+                *ngIf="isNeedToShowTestsEditor && task.tests"
+                class="review-task__editor"
+                [options]="monacoEditorOptions"
+                [(ngModel)]="task.tests"></ngx-monaco-editor>
+        </mat-tab>
+    </mat-tab-group>
 
-            <mat-form-field
-                class="review-task__form-field"
-                appearance="outline">
-                <mat-label class="review-task__field-label">
-                    Comment
-                </mat-label>
-                <textarea
-                    class="review-task__textarea-field"
-                    matInput
-                    type="text"
-                    [name]="taskCommentControlName"
-                    [value]="task.reviewerComment"
-                    rows="7"
-                    resize="none"
-                    placeholder="Leave a comment..."
-                    required
-                    [minlength]="taskMinCommentLength"
-                    [maxLength]="taskMaxCommentLength"
-                    [formControlName]="taskCommentControlName"></textarea>
-                <mat-error
-                    *ngIf="reviewTaskForm.controls[taskCommentControlName].hasError('required')"
-                    class="review-task__field-error">
-                    Comment is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-        </div>
+    <mat-toolbar
+        class="review-task__footer"
+        color="basic">
+        <button
+            class="review-task__button"
+            mat-raised-button
+            color="primary"
+            type="submit"
+            aria-label="Submit"
+            [disabled]="reviewTaskForm.invalid"
+            (click)="onSubmitTaskReview()">
+            Submit
+        </button>
+        <button
+            class="review-task__button"
+            mat-button
+            color="primary"
+            aria-label="Cancel"
+            (click)="onCancelTaskReview()">
+            Cancel
+        </button>
+    </mat-toolbar>
+</div>
 
-        <mat-toolbar
-            class="review-task__form-footer"
-            color="basic">
-            <button
-                class="review-task__form-button toolbar-button"
-                mat-raised-button
-                color="primary"
-                type="submit"
-                [disabled]="reviewTaskForm.invalid">
-                Submit
-            </button>
-            <button
-                class="review-task__form-button toolbar-button"
-                mat-button
-                color="primary"
-                (click)="onCancelTaskReview">
-                Cancel
-            </button>
-        </mat-toolbar>
-    </div>
-</form>
+

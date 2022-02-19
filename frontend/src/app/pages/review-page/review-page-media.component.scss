@@ -1,7 +1,7 @@
 @media screen and (min-width: 1441px) {
 	.review-page.review-page_xl-sized-device {
-        & .review-page__form {
-            width: 33.3333333333333%;
+        & .review-page__drawer {
+            width: 50%;
         }
     }
 }
@@ -9,7 +9,7 @@
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
 	.review-page.review-page_l-sized-device {
         & .review-page__drawer {
-            width: 40%;
+            width: 50%;
         }
     }
 }
@@ -17,7 +17,7 @@
 @media screen and (min-width: 601px) and (max-width: 1024px) {
 	.review-page.review-page_m-sized-device {
         & .review-page__drawer {
-            width: 50%;
+            width: 100%;
         }
     }
 }

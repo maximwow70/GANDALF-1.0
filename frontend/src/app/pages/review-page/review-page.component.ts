@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskFacadeService } from '../task-page/service/task-facade.service';
 import { UserTask } from 'src/app/model/user-task';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-review-page',
@@ -25,7 +26,9 @@ export class ReviewPageComponent implements OnInit {
 	}
 
 	public ngOnInit(): void {
-		this.taskFacade.usersTasks.value$.subscribe((usersTasks: UserTask[]) => {
+		this.taskFacade.usersTasks.value$.pipe(
+			takeUntil(this.destroy$),
+		).subscribe((usersTasks: UserTask[]) => {
 			this.usersTasks = usersTasks;
 		});
 

@@ -5,7 +5,7 @@ import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs/tab-group
 import { AppTitles } from 'src/app/model/app-titles';
 import { IFormControl } from 'src/app/model/form-control';
 import { UserTask } from 'src/app/model/user-task';
-import { monacoEditorOptions } from 'src/app/utils/monaco-editor/options';
+import { readOnlyMonacoEditorOptions } from 'src/app/utils/monaco-editor/options';
 
 @Component({
 	selector: 'app-review-task',
@@ -22,7 +22,7 @@ export class ReviewTaskComponent implements OnInit {
 	@ViewChild('reviewTaskTabs', { static: false })
 	private reviewTaskTabs: MatTabGroup | undefined;
 
-	public monacoEditorOptions = monacoEditorOptions;
+	public monacoEditorOptions = readOnlyMonacoEditorOptions;
 
 	public taskMinScore: number = 0;
 	public taskMaxScore: number = 0;

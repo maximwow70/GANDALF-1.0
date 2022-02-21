@@ -120,7 +120,7 @@
             class="review-task__group-tab"
             [label]="reviewTaskSolutionTabLabel">
             <ngx-monaco-editor
-                *ngIf="isNeedToShowSolutionEditor"
+                *ngIf="showSolutionEditor"
                 class="review-task__editor"
                 [options]="monacoEditorOptions"
                 [(ngModel)]="task.solution"></ngx-monaco-editor>
@@ -131,7 +131,7 @@
             class="review-task__group-tab"
             [label]="reviewTaskTestsTabLabel">
             <ngx-monaco-editor
-                *ngIf="isNeedToShowTestsEditor && task.tests"
+                *ngIf="showTestsEditor"
                 class="review-task__editor"
                 [options]="monacoEditorOptions"
                 [(ngModel)]="task.tests"></ngx-monaco-editor>

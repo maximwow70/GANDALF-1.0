@@ -40,8 +40,8 @@ export class ReviewTaskComponent implements OnInit {
 	public reviewTaskSolutionTabLabel: string = AppTitles.SOLUTION_TITLE;
 	public reviewTaskTestsTabLabel: string = AppTitles.TESTS_TITLE;
 
-	public isNeedToShowSolutionEditor: boolean = false;
-	public isNeedToShowTestsEditor: boolean = false;
+	public showSolutionEditor: boolean = false;
+	public showTestsEditor: boolean = false;
 
 	constructor() {
 		this.cancelClicked = new EventEmitter<void>();
@@ -103,18 +103,18 @@ export class ReviewTaskComponent implements OnInit {
 	}
 
 	private resetReviewTaskEditorsShowing(): void {
-		this.isNeedToShowSolutionEditor = false;
-		this.isNeedToShowTestsEditor = false;
+		this.showSolutionEditor = false;
+		this.showTestsEditor = false;
 	}
 
 	private setReviewTaskSolutionEditorShowing(): void {
 		this.resetReviewTaskEditorsShowing();
-		this.isNeedToShowSolutionEditor = true;
+		this.showSolutionEditor = true;
 	}
 
 	private setReviewTaskTestsEditorShowing(): void {
 		this.resetReviewTaskEditorsShowing();
-		this.isNeedToShowTestsEditor = true;
+		this.showTestsEditor = true;
 	}
 
 	public ngOnInit(): void {

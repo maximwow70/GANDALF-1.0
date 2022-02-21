@@ -8,10 +8,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TaskCardComponent {
 	@Input() task: UserTask | null = null;
-	@Input() deleteDisabled!: boolean | null;
-	@Input() reviewMode: boolean = false;
-	@Input() highlighted: boolean = false;
-	@Input() inReview: boolean = false;
+
+	@Input() isDeleteDisabled!: boolean | null;
+	@Input() isReviewMode: boolean = false;
+	@Input() isHighlighted: boolean = false;
+	@Input() isInReview: boolean = false;
 
 	@Output() openClicked: EventEmitter<void>;
 	@Output() editClicked: EventEmitter<void>;

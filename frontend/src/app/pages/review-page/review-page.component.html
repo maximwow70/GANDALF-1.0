@@ -12,13 +12,13 @@
                 class="review-page__task"
                 *ngFor="let userTask of usersTasks"
                 [task]="userTask"
-                [highlighted]="
+                [isHighlighted]="
                     currentReviewTask
                         ? userTask.uid === currentReviewTask.uid
                         : false
                 "
-                [reviewMode]="true"
-                [inReview]="
+                [isReviewMode]="true"
+                [isInReview]="
                     currentReviewTask
                         ? userTask.uid === currentReviewTask.uid
                         : false

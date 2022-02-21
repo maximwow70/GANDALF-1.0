@@ -10,7 +10,7 @@
             <app-task-card class="tasks-page__task"
                            *ngFor="let task of tasks"
                            [task]="task"
-                           [deleteDisabled]="tasksFacade.deleteTaskInProgress$ | async"
+                           [isDeleteDisabled]="tasksFacade.deleteTaskInProgress$ | async"
                            (openClicked)="navigateToTask(task.uid)"
                            (editClicked)="navigateToTaskEdit(task.taskUid)"
                            (deleteClicked)="deleteTask(task.taskUid)">

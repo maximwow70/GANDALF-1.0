@@ -4,6 +4,7 @@ import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs/tab-group
 import { AppTitles } from 'src/app/model/app-titles';
 import { IFormControl } from 'src/app/model/form-control';
 import { UserTask } from 'src/app/model/user-task';
+import { taskFormOptions } from 'src/app/utils/form/options';
 import { readOnlyMonacoEditorOptions } from 'src/app/utils/monaco-editor/options';
 
 @Component({
@@ -23,11 +24,11 @@ export class ReviewTaskComponent implements OnInit {
 
 	public monacoEditorOptions = readOnlyMonacoEditorOptions;
 
-	public taskMinScore: number = 0;
-	public taskMaxScore: number = 0;
+	public taskMinScore: number = taskFormOptions.defaultMinScore;
+	public taskMaxScore: number = taskFormOptions.defaultMaxScore;
 
-	public taskMinCommentLength: number = 0;
-	public taskMaxCommentLength: number = 512;
+	public taskMinCommentLength: number = taskFormOptions.minCommentLength;
+	public taskMaxCommentLength: number = taskFormOptions.maxCommentLength;
 
 	public reviewTaskForm: FormGroup = new FormGroup({});
 

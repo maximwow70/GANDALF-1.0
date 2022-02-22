@@ -34,7 +34,8 @@
         position="end">
         <app-review-task
             [userTask]="currentReviewTask"
-            (cancelClicked)="onCancelReviewTask()">
+            (cancelClicked)="onCancelReviewTask()"
+            (userTaskUpdated)="onCurrentReviewTaskUpdated()">
         </app-review-task>
     </mat-drawer>
 </mat-drawer-container>

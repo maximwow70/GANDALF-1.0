@@ -4,6 +4,7 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { UserTask } from 'src/app/model/user-task';
 import { Subject } from 'rxjs';
+import { monacoEditorOptions } from 'src/app/utils/monaco-editor/options';
 
 @Component({
 	selector: 'app-task-page',
@@ -11,7 +12,7 @@ import { Subject } from 'rxjs';
 	styleUrls: ['./task-page.component.scss'],
 })
 export class TaskPageComponent implements OnInit, OnDestroy {
-	public editorOptions = { theme: 'vs-dark', language: 'typescript' };
+	public editorOptions = monacoEditorOptions;
 	public task!: UserTask;
 	public destroy$: Subject<void>;
 

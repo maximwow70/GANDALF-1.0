@@ -1,19 +1,22 @@
 <div class="tasks-page">
     <div class="tasks-page__content">
         <div class="tasks-page__tasks-list">
-            <button class="tasks-page__add-task-button"
-                    mat-raised-button color="primary"
-                    (click)="addTask()"
-                    [disabled]="tasksFacade.addTaskInProgress$ | async">
+            <button 
+                class="tasks-page__add-task-button"
+                mat-raised-button
+                [disabled]="tasksFacade.addTaskInProgress$ | async"
+                (click)="addTask()"
+                color="primary">
                 ADD TASK
             </button>
-            <app-task-card class="tasks-page__task"
-                           *ngFor="let task of tasks"
-                           [task]="task"
-                           [deleteDisabled]="tasksFacade.deleteTaskInProgress$ | async"
-                           (openClicked)="navigateToTask(task.uid)"
-                           (editClicked)="navigateToTaskEdit(task.taskUid)"
-                           (deleteClicked)="deleteTask(task.taskUid)">
+            <app-task-card
+                class="tasks-page__task"
+                *ngFor="let task of tasks"
+                [task]="task"
+                [isDeleteDisabled]="tasksFacade.deleteTaskInProgress$ | async"
+                (openClicked)="navigateToTask(task.uid)"
+                (editClicked)="navigateToTaskEdit(task.taskUid)"
+                (deleteClicked)="deleteTask(task.taskUid)">
             </app-task-card>
         </div>
         <div class="tasks-page__scoreboard">

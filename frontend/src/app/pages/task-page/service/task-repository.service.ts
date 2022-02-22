@@ -10,6 +10,10 @@ import { UserTask } from 'src/app/model/user-task';
 export class TaskRepositoryService {
 	constructor(private http: HttpClient) {}
 
+	public loadUsersTasks(): Observable<UserTask[]> {
+		return this.http.get<UserTask[]>('/api/user-tasks');
+	}
+
 	public loadUserTask(uid: string): Observable<UserTask> {
 		return this.http.get<UserTask>('/api/user-tasks/' + uid);
 	}

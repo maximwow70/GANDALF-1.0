@@ -11,14 +11,33 @@ import { Observable } from 'rxjs';
 })
 export class TaskFacadeService {
 	public task: StoreEntity<UserTask>;
+	public usersTasks: StoreEntity<UserTask[]>;
 	public taskLoadingInProgress$: Observable<boolean>;
 
 	constructor(private taskRepository: TaskRepositoryService) {
 		this.task = new StoreEntity<UserTask>(null);
+		this.usersTasks = new StoreEntity<UserTask[]>([]);
 		this.taskLoadingInProgress$ = this.task.status$.pipe(
 			map((status: EntityStatus) => {
 				return status === EntityStatus.Pending;
 			})
+		);
+	}
+
+	public loadUsersTasks(): void {
+		this.usersTasks.setStatus(EntityStatus.Pending);
+
+		this.taskRepository.loadUsersTasks().subscribe(
+			(usersTasks: UserTask[]) => {
+				this.usersTasks.setEntity({
+					value: usersTasks,
+					status: EntityStatus.Success,
+					errors: '',
+				});
+			},
+			() => {
+				this.usersTasks.setStatus(EntityStatus.Error);
+			}
 		);
 	}
 

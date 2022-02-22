@@ -1,0 +1,165 @@
+<div
+    class="review-task__wrapper"
+    *ngIf="task">
+    <mat-toolbar class="review-task__header">
+        <span class="review-task__title">
+            Review
+        </span>
+        <button
+            class="review-task__button"
+            mat-icon-button
+            (click)="onCancelTaskReview()"
+            color="primary"
+            aria-label="Cancel">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-tab-group
+        class="review-task__group"
+        #reviewTaskTabs
+        (selectedTabChange)="onSelectedReviewTaskTabChange($event)">
+        <mat-tab
+            class="review-task__group-tab"
+            [label]="reviewTaskSubmitTabLabel">
+            <form
+                class="review-task__form"
+                [formGroup]="reviewTaskForm">
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Task
+                    </mat-label>
+                    <input
+                        class="review-task__input-field"
+                        matInput
+                        [name]="taskTitleControlName"
+                        [formControlName]="taskTitleControlName"
+                        type="text"
+                        readonly="true">
+                </mat-form-field>
+    
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Student
+                    </mat-label>
+                    <input
+                        class="review-task__input-field"
+                        matInput
+                        [name]="taskStudentControlName"
+                        [formControlName]="taskStudentControlName"
+                        type="text"
+                        readonly="true">
+                </mat-form-field>
+    
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Score
+                    </mat-label>
+                    <input
+                        class="review-task__input-field"
+                        matInput
+                        [name]="taskScoreControlName"
+                        [formControlName]="taskScoreControlName"
+                        [value]="task.userScore"
+                        [min]="taskMinScore"
+                        [max]="taskMaxScore"
+                        type="number"
+                        required
+                        placeholder="Change number...">
+                    <mat-error
+                        class="review-task__field-error"
+                        *ngIf="
+                            reviewTaskForm.controls[taskScoreControlName].hasError('min')
+                            || reviewTaskForm.controls[taskScoreControlName].hasError('max')
+                        ">
+                        Please enter score <strong>from {{taskMinScore}} to {{taskMaxScore}}</strong>
+                    </mat-error>
+                    <mat-error
+                        class="review-task__field-error"
+                        *ngIf="reviewTaskForm.controls[taskScoreControlName].hasError('required')">
+                        Score is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+    
+                <mat-form-field
+                    class="review-task__form-field"
+                    appearance="outline">
+                    <mat-label class="review-task__field-label">
+                        Comment
+                    </mat-label>
+                    <textarea
+                        class="review-task__textarea-field"
+                        matInput
+                        [name]="taskCommentControlName"
+                        [formControlName]="taskCommentControlName"
+                        [value]="task.reviewerComment"
+                        [minLength]="taskMinCommentLength"
+                        [maxLength]="taskMaxCommentLength"
+                        type="text"
+                        required
+                        placeholder="Leave a comment..."
+                        rows="7"
+                        resize="none"></textarea>
+                    <mat-error
+                        class="review-task__field-error"
+                        *ngIf="reviewTaskForm.controls[taskCommentControlName].hasError('required')">
+                        Comment is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </mat-tab>
+
+        <mat-tab
+            class="review-task__group-tab"
+            *ngIf="task.solution"
+            [label]="reviewTaskSolutionTabLabel">
+            <ngx-monaco-editor
+                class="review-task__editor"
+                *ngIf="showSolutionEditor"
+                [options]="monacoEditorOptions"
+                [(ngModel)]="task.solution"></ngx-monaco-editor>
+        </mat-tab>
+
+        <mat-tab
+            class="review-task__group-tab"
+            *ngIf="task.tests"
+            [label]="reviewTaskTestsTabLabel">
+            <ngx-monaco-editor
+                class="review-task__editor"
+                *ngIf="showTestsEditor"
+                [options]="monacoEditorOptions"
+                [(ngModel)]="task.tests"></ngx-monaco-editor>
+        </mat-tab>
+    </mat-tab-group>
+
+    <mat-toolbar
+        class="review-task__footer"
+        color="basic">
+        <button
+            class="review-task__button"
+            mat-raised-button
+            [disabled]="reviewTaskForm.invalid"
+            (click)="onSubmitTaskReview()"
+            type="submit"
+            color="primary"
+            aria-label="Submit">
+            Submit
+        </button>
+        <button
+            class="review-task__button"
+            mat-button
+            (click)="onCancelTaskReview()"
+            color="primary"
+            aria-label="Cancel">
+            Cancel
+        </button>
+    </mat-toolbar>
+</div>
+
+

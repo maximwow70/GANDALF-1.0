@@ -1,38 +1,38 @@
 <mat-card
-	*ngIf="task"
 	class="task-card"
-	[class.task-card_highlighted]="isHighlighted">
+	[class.task-card_highlighted]="isHighlighted"
+	*ngIf="task">
 	<mat-card-header>
 		<mat-card-title>{{task.title}}</mat-card-title>
 		<mat-card-subtitle>Score: {{task.userScore}}/{{task.maxScore}}</mat-card-subtitle>
 	</mat-card-header>
 	<mat-card-actions align="end">
 		<button
-			*ngIf="!isReviewMode"
 			mat-button
+			*ngIf="!isReviewMode"
 			(click)="openClicked.next()">
 			OPEN
 		</button>
 		<button
-			*ngIf="!isReviewMode"
 			mat-button
-			color="primary"
-			(click)="editClicked.next()">
+			*ngIf="!isReviewMode"
+			(click)="editClicked.next()"
+			color="primary">
 			EDIT
 		</button>
 		<button
-			*ngIf="isReviewMode && !isInReview"
 			mat-button
-			color="primary"
-			(click)="reviewClicked.next()">
+			*ngIf="isReviewMode && !isInReview"
+			(click)="reviewClicked.next()"
+			color="primary">
 			REVIEW
 		</button>
 		<button
-			*ngIf="!isReviewMode"
 			mat-button
-			color="warn"
+			*ngIf="!isReviewMode"
 			[disabled]="isDeleteDisabled"
-			(click)="deleteClicked.next()">
+			(click)="deleteClicked.next()"
+			color="warn">
 			DELETE
 		</button>
 	</mat-card-actions>

@@ -3,6 +3,7 @@ import { TaskFacadeService } from '../task-page/service/task-facade.service';
 import { UserTask } from 'src/app/model/user-task';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ProcessStatus } from 'src/app/model/process-status';
 
 @Component({
 	selector: 'app-review-page',
@@ -25,11 +26,19 @@ export class ReviewPageComponent implements OnInit {
 		this.usersTasks = [];
 	}
 
+	private getShowUserTaskOnPage(userTask: UserTask): boolean {
+		return (
+			Boolean(userTask.solution)
+			&& userTask.status === ProcessStatus.COMPLETED
+			&& userTask.review.status !== ProcessStatus.COMPLETED
+		);
+	}
+
 	public ngOnInit(): void {
 		this.taskFacade.usersTasks.value$.pipe(
 			takeUntil(this.destroy$),
-		).subscribe((usersTasks: UserTask[]) => {
-			this.usersTasks = usersTasks;
+		).subscribe((usersTask: UserTask[]) => {
+			this.usersTasks = usersTask.filter((userTask: UserTask) => this.getShowUserTaskOnPage(userTask));
 		});
 
 		this.taskFacade.loadUsersTasks();

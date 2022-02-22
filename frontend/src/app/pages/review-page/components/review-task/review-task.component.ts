@@ -22,6 +22,9 @@ export class ReviewTaskComponent implements OnInit {
 	@Output()
 	public cancelClicked: EventEmitter<void>;
 
+	@Output()
+	public userTaskUpdated: EventEmitter<void>;
+
 	@ViewChild('reviewTaskTabs', { static: false })
 	private reviewTaskTabs: MatTabGroup | undefined;
 
@@ -49,6 +52,7 @@ export class ReviewTaskComponent implements OnInit {
 
 	constructor(public userTaskReviewFacade: UserTaskReviewFacadeService) {
 		this.cancelClicked = new EventEmitter<void>();
+		this.userTaskUpdated = new EventEmitter<void>();
 	}
 
 	private initReviewTaskForm(): void {
@@ -130,6 +134,8 @@ export class ReviewTaskComponent implements OnInit {
 		};
 
 		this.userTaskReviewFacade.submitTask(this.userTask, userTaskReview);
+
+		this.userTaskUpdated.next();
 
 		this.cancelTaskReview();
 	}

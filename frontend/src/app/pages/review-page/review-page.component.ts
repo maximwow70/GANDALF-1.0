@@ -59,4 +59,8 @@ export class ReviewPageComponent implements OnInit {
 		this.isNeedToOpenReviewTask = false;
 	}
 
+	public onCurrentReviewTaskUpdated(): void {
+		this.taskFacade.loadUsersTasks();
+	}
+
 }

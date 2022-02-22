@@ -3,9 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs/tab-group';
 import { AppTitles } from 'src/app/model/app-titles';
 import { IFormControl } from 'src/app/model/form-control';
+import { ProcessStatus } from 'src/app/model/process-status';
 import { UserTask } from 'src/app/model/user-task';
+import { UserTaskReview } from 'src/app/model/user-task-review';
 import { taskFormOptions } from 'src/app/utils/form/options';
 import { readOnlyMonacoEditorOptions } from 'src/app/utils/monaco-editor/options';
+import { UserTaskReviewFacadeService } from './service/user-task-review-facade.service';
 
 @Component({
 	selector: 'app-review-task',
@@ -14,7 +17,7 @@ import { readOnlyMonacoEditorOptions } from 'src/app/utils/monaco-editor/options
 })
 export class ReviewTaskComponent implements OnInit {
 	@Input()
-	public task: UserTask | null = null;
+	public userTask: UserTask | null = null;
 
 	@Output()
 	public cancelClicked: EventEmitter<void>;
@@ -44,7 +47,7 @@ export class ReviewTaskComponent implements OnInit {
 	public showSolutionEditor: boolean = false;
 	public showTestsEditor: boolean = false;
 
-	constructor() {
+	constructor(public userTaskReviewFacade: UserTaskReviewFacadeService) {
 		this.cancelClicked = new EventEmitter<void>();
 	}
 
@@ -73,9 +76,9 @@ export class ReviewTaskComponent implements OnInit {
 		]);
 	}
 
-	private updateTaskScore(task:  UserTask): void {
+	private updateTaskScore(userTask:  UserTask): void {
 		this.taskMinScore = 0;
-		this.taskMaxScore = task.maxScore || 0;
+		this.taskMaxScore = userTask.maxScore || 0;
 	}
 
 	private updateFormControlValue({
@@ -125,19 +128,19 @@ export class ReviewTaskComponent implements OnInit {
 	public ngOnChanges(changes: SimpleChanges): void {
 		this.resetComponent();
 
-		const task: UserTask = changes.task.currentValue;
+		const userTask: UserTask = changes.userTask.currentValue;
 
-		if (task) {
-			this.updateTaskScore(task);
+		if (userTask) {
+			this.updateTaskScore(userTask);
 
 			this.updateFormControlValue({
 				formControlName: this.taskTitleControlName,
-				value: task.title,
+				value: userTask.title,
 			});
 
 			this.updateFormControlValue({
 				formControlName: this.taskStudentControlName,
-				value: task.review.reviewerName,
+				value: userTask.review.reviewerName,
 			});
 		}
 
@@ -146,12 +149,14 @@ export class ReviewTaskComponent implements OnInit {
 	}
 
 	public onSubmitTaskReview(): void {
-		console.log('Submitted Form Values:', {
-			title: this.reviewTaskForm.value[this.taskTitleControlName],
-			userName: this.reviewTaskForm.value[this.taskStudentControlName],
-			userScore: this.reviewTaskForm.value[this.taskScoreControlName],
-			reviewerComment: this.reviewTaskForm.value[this.taskCommentControlName],
-		});
+		const userTaskReview: UserTaskReview = {
+			reviewerName: '',
+			score: this.reviewTaskForm.value[this.taskScoreControlName],
+			comment: this.reviewTaskForm.value[this.taskCommentControlName],
+			status: ProcessStatus.COMPLETED,
+		};
+
+		this.userTaskReviewFacade.submitTask(this.userTask, userTaskReview);
 
 		this.cancelTaskReview();
 	}

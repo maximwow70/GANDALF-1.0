@@ -1,6 +1,6 @@
 <div
     class="review-task__wrapper"
-    *ngIf="task">
+    *ngIf="userTask">
     <mat-toolbar class="review-task__header">
         <span class="review-task__title">
             Review
@@ -66,7 +66,7 @@
                         matInput
                         [name]="taskScoreControlName"
                         [formControlName]="taskScoreControlName"
-                        [value]="task.userScore"
+                        [value]="userTask.userScore"
                         [min]="taskMinScore"
                         [max]="taskMaxScore"
                         type="number"
@@ -98,7 +98,7 @@
                         matInput
                         [name]="taskCommentControlName"
                         [formControlName]="taskCommentControlName"
-                        [value]="task.review.comment"
+                        [value]="userTask.review.comment"
                         [minLength]="taskMinCommentLength"
                         [maxLength]="taskMaxCommentLength"
                         type="text"
@@ -117,24 +117,24 @@
 
         <mat-tab
             class="review-task__group-tab"
-            *ngIf="task.solution"
+            *ngIf="userTask.solution"
             [label]="reviewTaskSolutionTabLabel">
             <ngx-monaco-editor
                 class="review-task__editor"
                 *ngIf="showSolutionEditor"
                 [options]="monacoEditorOptions"
-                [(ngModel)]="task.solution"></ngx-monaco-editor>
+                [(ngModel)]="userTask.solution"></ngx-monaco-editor>
         </mat-tab>
 
         <mat-tab
             class="review-task__group-tab"
-            *ngIf="task.tests"
+            *ngIf="userTask.tests"
             [label]="reviewTaskTestsTabLabel">
             <ngx-monaco-editor
                 class="review-task__editor"
                 *ngIf="showTestsEditor"
                 [options]="monacoEditorOptions"
-                [(ngModel)]="task.tests"></ngx-monaco-editor>
+                [(ngModel)]="userTask.tests"></ngx-monaco-editor>
         </mat-tab>
     </mat-tab-group>
 

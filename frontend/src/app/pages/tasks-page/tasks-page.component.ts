@@ -62,8 +62,8 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 		const defaultTask: Task = {
 			uid: v4(),
 			title: 'New Task',
-			task: 'You shall not pass!1!',
-			solutionPlaceholder: '',
+			description: 'You shall not pass!1!',
+			placeholder: '',
 			maxScore: 100,
 			type: TaskType.HTML,
 			tests: '',

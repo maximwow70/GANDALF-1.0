@@ -137,7 +137,7 @@ export class ReviewTaskComponent implements OnInit {
 
 			this.updateFormControlValue({
 				formControlName: this.taskStudentControlName,
-				value: task.userName,
+				value: task.review.reviewerName,
 			});
 		}
 

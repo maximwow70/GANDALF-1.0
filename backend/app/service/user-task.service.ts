@@ -7,6 +7,7 @@ import { TaskService } from "./task.service";
 import { UserTaskRepositoryService } from "./user-task-repository.service";
 import { TaskRepositoryService } from "./task-repository.service";
 import { UserTaskScoreService } from "./user-task-score.service";
+import { ProcessStatus } from "../model/process-status";
 
 const userId: string = "admin";
 
@@ -72,8 +73,13 @@ export class UserTaskService {
 
   public async updateUserTask(dto: UserTaskDto): Promise<UserTaskDto> {
     const userTask: UserTask = this.userTaskConverter.fromDto(dto);
-    const task: TaskEntity = await this.taskRepository.getTaskById(userTask.taskUid);
-    const userScore: number = this.userTaskScoreService.getScore(userTask, task);
+    const task: TaskEntity = await this.taskRepository.getTaskById(
+      userTask.taskUid
+    );
+    const userScore: number = this.userTaskScoreService.getScore(
+      userTask,
+      task
+    );
     const userTaskWithScore: UserTask = {
       ...userTask,
       userScore: userScore,
@@ -92,9 +98,15 @@ export class UserTaskService {
       //   todo: use real userID
       userId: userId,
       taskUid: task.uid,
-      solution: task.solutionPlaceholder,
+      solution: task.placeholder,
       userScore: 0,
       completed: false,
+      review: {
+        reviewerName: "",
+        score: null,
+        comment: "",
+        status: ProcessStatus.NOT_STARTED,
+      },
     };
 
     return userTask;

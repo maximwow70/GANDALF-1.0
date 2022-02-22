@@ -5,6 +5,7 @@
 	<mat-card-header>
 		<mat-card-title>{{task.title}}</mat-card-title>
 		<mat-card-subtitle>Score: {{task.userScore}}/{{task.maxScore}}</mat-card-subtitle>
+		<mat-card-subtitle>Review score: {{ task.review.score === null ? "In Progress" : task.review.score + '/' + task.maxScore }}</mat-card-subtitle>
 	</mat-card-header>
 	<mat-card-actions align="end">
 		<button

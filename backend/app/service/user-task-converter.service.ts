@@ -10,12 +10,13 @@ export class UserTaskConverterService {
             taskUid: task.uid,
             userId: userTask.userId,
             title: task.title,
-            task: task.task,
-            solution: userTask.solution ? userTask.solution : task.solutionPlaceholder,
+            description: task.description,
+            solution: userTask.solution ? userTask.solution : task.placeholder,
             type: task.type,
             completed: userTask.completed,
             maxScore: task.maxScore,
-            userScore: userTask.userScore
+            userScore: userTask.userScore,
+            review: userTask.review,
         };
     }
 
@@ -26,7 +27,8 @@ export class UserTaskConverterService {
             completed: dto.completed,
             solution: dto.solution,
             userScore: dto.userScore,
-            taskUid: dto.taskUid
+            taskUid: dto.taskUid,
+            review: dto.review,
         };
     }
 }

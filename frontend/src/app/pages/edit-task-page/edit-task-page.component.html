@@ -22,10 +22,10 @@
                     <mat-option value="javascript">JS</mat-option>
                 </mat-select>
             </mat-form-field>
-            <ckeditor [(ngModel)]="task.task" [editor]="Editor"></ckeditor>
+            <ckeditor [(ngModel)]="task.description" [editor]="Editor"></ckeditor>
         </mat-tab>
         <mat-tab label="Solution" class="editor">
-            <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.solutionPlaceholder"></ngx-monaco-editor>
+            <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.placeholder"></ngx-monaco-editor>
         </mat-tab>
         <mat-tab label="Tests" [disabled]="!isJsTask">
             <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="task.tests"></ngx-monaco-editor>

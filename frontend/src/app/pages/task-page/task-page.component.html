@@ -1,7 +1,7 @@
 <div class="task-page">
     <mat-grid-list class="task-page__content" cols="12" rowHeight="100%" gutterSize="16px" *ngIf="task">
         <mat-grid-tile colspan="4" rowspan="1">
-            <div class="task-viewer" [innerHTML]="task.task"></div>
+            <div class="task-viewer" [innerHTML]="task.description"></div>
         </mat-grid-tile>
         <mat-grid-tile colspan="8" rowspan="1">
             <mat-grid-tile-header>{{task.title}}</mat-grid-tile-header>

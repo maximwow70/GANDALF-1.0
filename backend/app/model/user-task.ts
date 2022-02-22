@@ -1,4 +1,5 @@
 import { TaskType } from './task-type';
+import { UserTaskReview } from './user-task-review';
 
 export interface UserTaskDto {
 	uid: string;
@@ -6,11 +7,12 @@ export interface UserTaskDto {
 	userId: string;
 	title: string;
 	solution: string;
-	task: string;
+	description: string;
 	userScore: number;
 	maxScore: number;
 	completed: boolean;
 	type: TaskType;
+	review: UserTaskReview;
 }
 export interface UserTask {
 	uid: string;
@@ -19,5 +21,6 @@ export interface UserTask {
 	solution: string;
 	userScore: number;
 	completed: boolean;
+	review: UserTaskReview;
 }
 

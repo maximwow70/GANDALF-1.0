@@ -100,7 +100,7 @@ export class UserTaskService {
       taskUid: task.uid,
       solution: task.placeholder,
       userScore: 0,
-      completed: false,
+      status: ProcessStatus.NOT_STARTED,
       review: {
         reviewerName: "",
         score: null,

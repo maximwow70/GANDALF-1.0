@@ -1,3 +1,4 @@
+import { ProcessStatus } from './process-status';
 import { TaskType } from './task-type';
 import { UserTaskReview } from './user-task-review';
 
@@ -10,7 +11,7 @@ export interface UserTaskDto {
 	description: string;
 	userScore: number;
 	maxScore: number;
-	completed: boolean;
+	status: ProcessStatus;
 	type: TaskType;
 	review: UserTaskReview;
 }
@@ -20,7 +21,7 @@ export interface UserTask {
 	taskUid: string;
 	solution: string;
 	userScore: number;
-	completed: boolean;
+	status: ProcessStatus;
 	review: UserTaskReview;
 }
 

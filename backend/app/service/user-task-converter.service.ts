@@ -13,7 +13,7 @@ export class UserTaskConverterService {
             description: task.description,
             solution: userTask.solution ? userTask.solution : task.placeholder,
             type: task.type,
-            completed: userTask.completed,
+            status: userTask.status,
             maxScore: task.maxScore,
             userScore: userTask.userScore,
             review: userTask.review,
@@ -24,7 +24,7 @@ export class UserTaskConverterService {
         return {
             uid: dto.uid,
             userId: dto.userId,
-            completed: dto.completed,
+            status: dto.status,
             solution: dto.solution,
             userScore: dto.userScore,
             taskUid: dto.taskUid,

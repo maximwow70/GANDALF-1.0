@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { ProcessStatus } from 'src/app/model/process-status';
 import { UserTask } from 'src/app/model/user-task';
 
 @Injectable({
@@ -19,6 +20,9 @@ export class TaskRepositoryService {
 	}
 
 	public submitTask(task: UserTask): Observable<any> {
-		return this.http.put(`/api/user-tasks/` + task.uid, task);
+		return this.http.put(`/api/user-tasks/` + task.uid, {
+			...task,
+			status: ProcessStatus.COMPLETED,
+		});
 	}
 }

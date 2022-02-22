@@ -145,6 +145,16 @@
             class="review-task__button"
             mat-raised-button
             [disabled]="reviewTaskForm.invalid"
+            (click)="onDraftTaskReview()"
+            type="submit"
+            color="basic"
+            aria-label="Draft">
+            Draft
+        </button>
+        <button
+            class="review-task__button"
+            mat-raised-button
+            [disabled]="reviewTaskForm.invalid"
             (click)="onSubmitTaskReview()"
             type="submit"
             color="primary"

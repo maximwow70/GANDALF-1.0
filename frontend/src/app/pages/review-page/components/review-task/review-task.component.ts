@@ -121,6 +121,19 @@ export class ReviewTaskComponent implements OnInit {
 		this.showTestsEditor = true;
 	}
 
+	private updateTaskReview(processStatus: ProcessStatus): void {
+		const userTaskReview: UserTaskReview = {
+			reviewerName: '',
+			score: this.reviewTaskForm.value[this.taskScoreControlName],
+			comment: this.reviewTaskForm.value[this.taskCommentControlName],
+			status: processStatus,
+		};
+
+		this.userTaskReviewFacade.submitTask(this.userTask, userTaskReview);
+
+		this.cancelTaskReview();
+	}
+
 	public ngOnInit(): void {
 		this.initReviewTaskForm();
 	}
@@ -149,16 +162,11 @@ export class ReviewTaskComponent implements OnInit {
 	}
 
 	public onSubmitTaskReview(): void {
-		const userTaskReview: UserTaskReview = {
-			reviewerName: '',
-			score: this.reviewTaskForm.value[this.taskScoreControlName],
-			comment: this.reviewTaskForm.value[this.taskCommentControlName],
-			status: ProcessStatus.COMPLETED,
-		};
+		this.updateTaskReview(ProcessStatus.COMPLETED);
+	}
 
-		this.userTaskReviewFacade.submitTask(this.userTask, userTaskReview);
-
-		this.cancelTaskReview();
+	public onDraftTaskReview(): void {
+		this.updateTaskReview(ProcessStatus.DRAFT);
 	}
 
 	public onCancelTaskReview(): void {

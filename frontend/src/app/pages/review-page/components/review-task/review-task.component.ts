@@ -80,7 +80,7 @@ export class ReviewTaskComponent implements OnInit {
 		]);
 	}
 
-	private updateTaskScore(userTask:  UserTask): void {
+	private updateTaskScoreRange(userTask:  UserTask): void {
 		this.taskMinScore = 0;
 		this.taskMaxScore = userTask.maxScore || 0;
 	}
@@ -150,7 +150,7 @@ export class ReviewTaskComponent implements OnInit {
 		const userTask: UserTask = changes.userTask.currentValue;
 
 		if (userTask) {
-			this.updateTaskScore(userTask);
+			this.updateTaskScoreRange(userTask);
 
 			this.updateFormControlValue({
 				formControlName: this.taskTitleControlName,

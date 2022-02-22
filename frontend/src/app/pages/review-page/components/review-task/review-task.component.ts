@@ -157,9 +157,20 @@ export class ReviewTaskComponent implements OnInit {
 				value: userTask.title,
 			});
 
+			// When user authentification will be done we can bind [value] here
 			this.updateFormControlValue({
 				formControlName: this.taskStudentControlName,
-				value: userTask.review.reviewerName,
+				value: '',
+			});
+
+			this.updateFormControlValue({
+				formControlName: this.taskScoreControlName,
+				value: String(userTask.review.score),
+			});
+
+			this.updateFormControlValue({
+				formControlName: this.taskCommentControlName,
+				value: userTask.review.comment,
 			});
 		}
 

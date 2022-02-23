@@ -9,8 +9,6 @@ import { TaskRepositoryService } from "./task-repository.service";
 import { UserTaskScoreService } from "./user-task-score.service";
 import { ProcessStatus } from "../model/process-status";
 
-const userId: string = "admin";
-
 @Injectable()
 export class UserTaskService {
   @Inject() taskService!: TaskService;
@@ -28,7 +26,7 @@ export class UserTaskService {
     return Promise.resolve(this.userTaskConverter.toDto(userTask, task));
   }
 
-  public async getAllTasks(): Promise<UserTaskDto[]> {
+  public async getAllTasks(userId: string): Promise<UserTaskDto[]> {
     const tasks: TaskEntity[] = await this.taskRepository.getAllTasks();
 
     const existingUserTasks: UserTask[] =
@@ -41,7 +39,7 @@ export class UserTaskService {
     });
 
     const userTasksToAdd = tasksToAdd.map((taskToAdd: TaskEntity) => {
-      const userTask: UserTask = this.generateUserTaskByTask(taskToAdd);
+      const userTask: UserTask = this.generateUserTaskByTask(taskToAdd, userId);
       return userTask;
     });
 
@@ -61,10 +59,10 @@ export class UserTaskService {
     return Promise.resolve(sortedTasksList);
   }
 
-  public async createUserTask(task: TaskEntity): Promise<UserTaskDto> {
+  public async createUserTask(task: TaskEntity, userId: string): Promise<UserTaskDto> {
     const createdTask: TaskEntity = await this.taskService.createTask(task);
 
-    const userTask: UserTask = this.generateUserTaskByTask(createdTask);
+    const userTask: UserTask = this.generateUserTaskByTask(createdTask, userId);
 
     await this.userTaskRepository.createTask(userTask);
 
@@ -92,7 +90,7 @@ export class UserTaskService {
     return this.userTaskRepository.removeTaskByTaskUid(uid);
   }
 
-  private generateUserTaskByTask(task: TaskEntity): UserTask {
+  private generateUserTaskByTask(task: TaskEntity, userId: string): UserTask {
     const userTask: UserTask = {
       uid: v4(),
       //   todo: use real userID

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Avatar } from '../common-components/avatar/avatar.component';
+import { AuthService } from './auth/auth.service';
 
 @Component({
 	selector: 'app-container',
@@ -7,12 +7,18 @@ import { Avatar } from '../common-components/avatar/avatar.component';
 	styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit {
-	public avatar: Avatar = {
-		url: '',
-		name: 'Billy',
-	};
+	public isUserLogged: boolean = false;
 
-	constructor() {}
+	constructor(public authService: AuthService) {}
 
 	ngOnInit(): void {}
+
+	public auth(): void {
+		if (!this.authService.user) {
+			this.authService.signInByGithub().subscribe((a) => {
+				console.log(`User logged: ${this.authService.user?.email}`);
+				this.isUserLogged = true;
+			});
+		}
+	}
 }

@@ -12,15 +12,15 @@ import { HttpClient } from '@angular/common/http';
 export class TasksRepositoryService {
 	constructor(private http: HttpClient) {}
 
-	public loadUserTasks(): Observable<UserTask[]> {
-		return this.http.get<UserTask[]>('api/user-tasks');
+	public loadUserTasks(userId: string): Observable<UserTask[]> {
+		return this.http.get<UserTask[]>(`api/user-tasks?userId=${userId}`);
 	}
 
 	public deleteTask(uid: string): Observable<string> {
 		return this.http.delete<string>('api/user-tasks/' + uid);
 	}
 
-	public addTask(task: Task): Observable<UserTask> {
-		return this.http.post<UserTask>('/api/user-tasks', task);
+	public addTask(task: Task, userId: string): Observable<UserTask> {
+		return this.http.post<UserTask>(`api/user-tasks?userId=${userId}`, task);
 	}
 }

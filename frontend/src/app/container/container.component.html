@@ -1,7 +1,8 @@
 <div class="container">
+    
     <mat-toolbar class="container-header">
         <div class="container-header__avatar">
-            <app-avatar [avatar]="avatar"></app-avatar>
+            <app-avatar [user]="authService.user"></app-avatar>
         </div>
 
         <span
@@ -13,6 +14,7 @@
         <div class="container-header__link">
             <button
                 class="container-header__button"
+                [disabled]="!isUserLogged"
                 mat-button
                 routerLink="/tasks">
                 Tasks
@@ -21,6 +23,7 @@
         <div class="container-header__link">
             <button
                 class="container-header__button"
+                [disabled]="!isUserLogged"
                 mat-button
                 routerLink="/review">
                 Review
@@ -28,7 +31,16 @@
         </div>
 
         <div class="container-header__spacer"></div>
-
+        
+        <button
+            class="container-header__icon-button"
+            mat-icon-button
+            *ngIf="!isUserLogged"
+            (click)="auth()">
+            <mat-icon>
+                login
+            </mat-icon>
+        </button>
         <button
             class="container-header__icon-button container-header__icon-button_admin"
             mat-icon-button>

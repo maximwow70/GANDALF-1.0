@@ -1,9 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-export interface Avatar {
-	url: string;
-	name: string;
-}
+import { User } from 'firebase/auth';
 
 @Component({
 	selector: 'app-avatar',
@@ -11,7 +7,7 @@ export interface Avatar {
 	styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent implements OnInit {
-	@Input() public avatar?: Avatar;
+	@Input() public user: User | null = null;
 
 	constructor() {}
 

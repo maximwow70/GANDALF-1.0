@@ -1,7 +1,7 @@
 <div class="container">
     <mat-toolbar class="container-header">
-        <div class="container-header__avatar">
-            <app-avatar [avatar]="avatar"></app-avatar>
+        <div class="container-header__avatar" [class.disabled]="authService.user" (click)="auth()">
+            <app-avatar [user]="authService.user"></app-avatar>
         </div>
 
         <span
@@ -13,6 +13,7 @@
         <div class="container-header__link">
             <button
                 class="container-header__button"
+                [disabled]="!authService.user"
                 mat-button
                 routerLink="/tasks">
                 Tasks
@@ -21,6 +22,7 @@
         <div class="container-header__link">
             <button
                 class="container-header__button"
+                [disabled]="!authService.user"
                 mat-button
                 routerLink="/review">
                 Review

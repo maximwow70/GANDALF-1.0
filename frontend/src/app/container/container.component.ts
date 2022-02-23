@@ -7,6 +7,7 @@ import { AuthService } from './auth/auth.service';
 	styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit {
+	public isUserLogged: boolean = false;
 
 	constructor(public authService: AuthService) {}
 
@@ -15,7 +16,8 @@ export class ContainerComponent implements OnInit {
 	public auth(): void {
 		if (!this.authService.user) {
 			this.authService.signInByGithub().subscribe((a) => {
-				console.log(this.authService.user);
+				console.log(`User logged: ${this.authService.user?.email}`);
+				this.isUserLogged = true;
 			});
 		}
 	}

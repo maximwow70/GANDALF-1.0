@@ -1,5 +1,5 @@
 <img
     class="avatar"
     [src]="user?.photoURL || 'assets/default-user.svg'"
-    [alt]="user?.displayName"
-    [title]="user?.displayName">
+    [alt]="user?.displayName || ''"
+    [title]="user?.displayName || ''">

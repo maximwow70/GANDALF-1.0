@@ -24,11 +24,6 @@ $header-height: 64px;
 
 		&__avatar {
 			margin-right: 10px;
-			cursor: pointer;
-
-			&.disabled {
-				cursor: default;
-			}
 		}
 
 		&__link {

@@ -5,6 +5,7 @@ import { TasksRepositoryService } from './tasks-repository.service';
 import { EntityStatus } from 'src/app/common-components/model/entity-status';
 import { Task } from '../../../model/task';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from 'src/app/container/auth/auth.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -14,7 +15,7 @@ export class TasksFacadeService {
 	public addTaskInProgress$: BehaviorSubject<boolean>;
 	public deleteTaskInProgress$: BehaviorSubject<boolean>;
 
-	constructor(private tasksRepository: TasksRepositoryService) {
+	constructor(private tasksRepository: TasksRepositoryService, private authService: AuthService) {
 		this.userTasks = new StoreEntity<UserTask[]>([]);
 		this.addTaskInProgress$ = new BehaviorSubject<boolean>(false);
 		this.deleteTaskInProgress$ = new BehaviorSubject<boolean>(false);
@@ -23,7 +24,7 @@ export class TasksFacadeService {
 	public loadUserTasks(): void {
 		this.userTasks.setStatus(EntityStatus.Pending);
 
-		this.tasksRepository.loadUserTasks().subscribe(
+		this.tasksRepository.loadUserTasks(this.authService.user?.email || '').subscribe(
 			(tasks: UserTask[]) => {
 				this.userTasks.setEntity({
 					value: tasks,
@@ -61,7 +62,7 @@ export class TasksFacadeService {
 	public addTask(task: Task): void {
 		this.addTaskInProgress$.next(true);
 		this.userTasks.setStatus(EntityStatus.Pending);
-		this.tasksRepository.addTask(task).subscribe(
+		this.tasksRepository.addTask(task, this.authService.user?.email || '').subscribe(
 			(userTask: UserTask) => {
 				this.userTasks.setEntity({
 					value: [...this.userTasks.value, userTask],

@@ -1,5 +1,5 @@
 import { TaskEntity } from './../model/task-entity';
-import { Body, Controller, Delete, Get, Path, Post, Put, Route } from 'tsoa';
+import { Body, Controller, Delete, Get, Path, Post, Put, Query, Route } from 'tsoa';
 import { Inject } from '../ioc';
 import { UserTaskService } from '../service/user-task.service';
 import { TaskService } from '../service/task.service';
@@ -11,8 +11,8 @@ export class UserTaskController extends Controller {
     @Inject() private taskService!: TaskService;
 
     @Get('')
-	public async getAllTasks(): Promise<UserTaskDto[]> {
-		return this.userTaskService.getAllTasks();
+	public async getAllTasks(@Query('userId') userId: string): Promise<UserTaskDto[]> {
+		return this.userTaskService.getAllTasks(userId);
 	}
 
 	@Get('{taskId}')
@@ -21,8 +21,8 @@ export class UserTaskController extends Controller {
 	}
 
 	@Post('')
-	public async createTask(@Body() dto: TaskEntity): Promise<UserTaskDto> {
-		return this.userTaskService.createUserTask(dto);
+	public async createTask(@Body() dto: TaskEntity, @Query('userId') userId: string): Promise<UserTaskDto> {
+		return this.userTaskService.createUserTask(dto, userId);
 	}
 
 	@Put('{radarId}')

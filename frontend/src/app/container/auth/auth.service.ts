@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import * as auth from 'firebase/auth';
-import { User, UserCredential } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { from, Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class AuthService {
 	public user: User | null = null;
 
